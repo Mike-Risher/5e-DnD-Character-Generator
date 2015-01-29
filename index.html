@@ -1,10 +1,9 @@
-
 <html>
 <head>
-<title>Listo v1.0 - Quick Character Generator for 5th Edition D&D</title>
+<title>Listo v1.02 - Quick Character Generator for 5th Edition D&D by Mike Risher</title>
 <meta charset="UTF-8">
 <meta name="author" content="Mike Risher">
-<meta name="description" content="Listo is a 5th Edition D&D Character Generator for Level 1-10 Characters created by Mike Risher.  Listo version 1.0c was released on October 29th, 2014.">
+<meta name="description" content="Listo is a 5th Edition D&D Character Generator for level 1-10 Characters created by Mike Risher.  Listo version 1.02d was released on December 12th, 2014.">
 <meta name="keywords" content="listo, DnD, D&D, Dungeons and Dragons, Character Generator, Character Maker, 5e, 5th edition, random">
 <link rel="icon" type="image/gif" href="http://i.imgur.com/6y35IBy.gif">
 
@@ -13,7 +12,6 @@
 /*
 http://i.imgur.com/DnuoN8l.gif
 */
-
 
 font: 12pt helvetica;
 width: 100%;
@@ -24,10 +22,28 @@ font: 11pt helvetica;
 width: 100%;
 }
 
-.top2 {
+.alText {
 font: 11pt helvetica;
-display: none;
-width: 100%;
+float: right;
+}
+
+.detailed {
+	font: 12pt helvetica;
+	display: none;
+}
+
+
+.rawAbils {
+	font: 10pt helvetica;
+	padding-left: 5px;
+}
+
+.buyDropdowns {
+	display: none;
+}
+
+.classOptions {
+	display: none;
 }
 
 .armorhp {
@@ -37,9 +53,6 @@ width: 100%;
 
 	padding-top: 1em;
 	padding-bottom: .5em;
-
-}
-.weapons {
 
 }
 
@@ -69,21 +82,21 @@ width: 100%;
 
 .side-area {
 	float: right;
-	width: 400px;
+	width: 350px;
 	padding-bottom: .5em;
 	padding-left: .5em;
 	border-left:  1px solid;
 	border-bottom:  1px solid;
 	margin-left: .5em;
-	
   }
+
 </style>
 </head> 
 <body onload="checkRun()">
 <div class="top">
 	<button id="reset" onclick="reset()">Reset</button> 
 
-	<select id="selLevel"><option value="0">Level 1-10</option>
+	<select id="selLevel">
 	<option value="1">1st level</option>
 	<option value="2">2nd level</option>
 	<option value="3">3rd level</option>
@@ -94,7 +107,24 @@ width: 100%;
 	<option value="8">8th level</option>
 	<option value="9">9th level</option>
 	<option value="10">10th level</option>
-	
+	<option value="21">Level 1-4</option>
+	<option value="22">Level 5-10</option>
+<!--	<option value="23">Level 8-12<option>
+	<option value="24">Level 12-16</option>
+	<option value="25">Level 17-20</option> 
+	<option value="11">11th level</option>
+	<option value="12">12th level</option>
+	<option value="13">13th level</option>
+	<option value="14">14th level</option>
+	<option value="15">15th level</option>
+	<option value="16">16th level</option>
+	<option value="17">17th level</option>
+	<option value="18">18th level</option>
+	<option value="19">19th level</option>
+	<option value="20">20th level</option>
+
+-->
+	<option value="0">Level 1-10</option>
 
 	</select> 
 
@@ -121,7 +151,7 @@ width: 100%;
 	</select>
 
 	 
-	<select id="selClass"><option value="0">Any Class</option>
+	<select id="selClass" onchange="selectClass()"><option value="0">Any Class</option>
 	<option value="1">Barbarian</option>
 	<option value="2">Bard</option>
 	<option value="3">Cleric</option>
@@ -139,6 +169,125 @@ width: 100%;
 	<option value="15">Wizard</option>
 	</select>
 
+	<span id="clericOptions" class="classOptions">
+		<select id="selCleric"><option value="-1">Any Cleric Domain</option>
+		<option value="0">Knowledge</option>
+		<option value="1">Life</option>
+		<option value="2">Light</option>
+		<option value="3">Nature</option>
+		<option value="4">Tempest</option>
+		<option value="5">Trickery</option>
+		<option value="6">War</option>
+		<option value="7">Death</option>
+		</select>
+	</span>
+
+	<span id="wizardOptions" class="classOptions">
+		<select id="selWizard"><option value="-1">Any Wizard School</option>
+		<option value="0">Abjuration</option>
+		<option value="1">Conjuration</option>
+		<option value="2">Divination</option>
+		<option value="3">Enchantment</option>
+		<option value="4">Evocation</option>
+		<option value="5">Illusion</option>
+		<option value="6">Necromancy</option>
+		<option value="7">Transmutation</option>
+		</select>
+	</span>
+
+
+	<span id="druidOptions" class="classOptions">
+		<select id="selDruid"><option value="-1">Any Druid Circle</option>
+		<option value="0">Circle of the Moon</option>
+		<option value="1">Circle of Land - Arctic</option>
+		<option value="2">Circle of Land - Coast</option>
+		<option value="3">Circle of Land - Desert</option>
+		<option value="4">Circle of Land - Forest</option>
+		<option value="5">Circle of Land - Grassland</option>
+		<option value="6">Circle of Land - Mountain</option>
+		<option value="7">Circle of Land - Swamp</option>
+		<option value="8">Circle of Land - Underdark</option>
+		</select>
+	</span>
+
+	<span id="barbarianOptions" class="classOptions">
+		<select id="selBarbarian"><option value="-1">Any Barbarian Path</option>
+		<option value="0">Path of the Berserker</option>
+		<option value="1">Path of the Totem Warrior (any)</option>
+		<option value="2">Path of the Totem Warrior (Bear)</option>
+		<option value="3">Path of the Totem Warrior (Eagle)</option>
+		<option value="4">Path of the Totem Warrior (Wolf)</option>
+		</select>
+	</span>
+	<span id="bardOptions" class="classOptions">
+		<select id="selBard"><option value="-1">Any Bard College</option>
+		<option value="0">College of Lore</option>
+		<option value="1">College of Valor</option>
+		</select>
+	</span>
+
+	<span id="fighterOptions" class="classOptions">
+		<select id="selFighter"><option value="-1">Any Fighter Archetype</option>
+		<option value="0">Champion</option>
+		<option value="1">Battle Master</option>
+		</select>
+	</span>
+	<span id="monkOptions" class="classOptions">
+		<select id="selMonk"><option value="-1">Any Monastic Tradtion</option>
+		<option value="0">Way of the Open Hand</option>
+		<option value="1">Way of Shadow</option>
+		<option value="2">Way of the Four Elements</option>
+		</select>
+	</span>
+	<span id="paladinOptions" class="classOptions">
+		<select id="selPaladin"><option value="-1">Any Sacred Oath</option>
+		<option value="0">Oath of Devotion</option>
+		<option value="1">Oath of the Ancients</option>
+		<option value="2">Oath of Vengeance</option>
+		
+		</select>
+	</span>
+	<span id="rangerOptions" class="classOptions">
+		<select id="selRanger"><option value="-1">Any Ranger Archetype</option>
+		<option value="0">Hunter</option>
+		<option value="1">Beast Master</option>
+		</select>
+	</span>
+	<span id="rogueOptions" class="classOptions">
+		<select id="selRogue"><option value="-1">Any Rogue Archetype</option>
+		<option value="0">Thief</option>
+		<option value="1">Assassin</option>
+		</select>
+	</span>
+	<span id="sorcererOptions" class="classOptions">
+		<select id="selSorcerer"><option value="-1">Any Sorcerous Origin</option>
+		<option value="0">Draconic Bloodline</option>
+		<option value="1">Wild Magic</option>
+		</select>
+	</span>
+	<span id="warlockOptions" class="classOptions">
+		<select id="selWarlock"><option value="-1">Any Patron</option>
+		<option value="0">The Archfey</option>
+		<option value="1">The Fiend</option>
+		<option value="2">The Great Old One</option>
+		</select>
+
+		<select id="selWarlockPact"><option value="-1">Any Pact Boon</option>
+		<option value="0">Pact of the Chain</option>
+		<option value="1">Pact of the Blade</option>
+		<option value="2">Pact of the Tome</option>
+		
+		</select>
+	</span>
+
+
+
+
+
+
+
+
+	
 	<select id="selBg"><option value="0">Any Background</option>
 	<option value="1">Acolyte</option>
 	<option value="2">Charlatan</option>
@@ -158,8 +307,25 @@ width: 100%;
 
 
 
+
+	<button id="go" onclick="checkRun()">Generate Character</button>
+	
+	
+	
+	<a href="info.html" class="info" target="_new">Info</a>
+</div>
+<div>
+<span style="font: 10pt helvetica;">
+
+	<select id="genMethod" onClick="switchBuy()">
+	<option value="0" selected="selected">Roll abilities</option>
+	<option value="1">Buy abilities (random)</option>
+	<option value="2">Buy abilities (manual)</option>
+	<option value="3">Buy abilities (detailed)</option>
+	</select>
+
 	<select id="selAbil">
-	<option value="0" selected="selected">Reroll if < 65</option>
+	<option value="0" selected="selected">Reroll if the total is under 65</option>
 	<option value="35">35</option>
 	<option value="40">40</option>
 	<option value="45">45</option>
@@ -174,16 +340,16 @@ width: 100%;
 	<option value="95">95</option>
 	</select>
 
+</span>
+
+<span id="ro" class="rawAbils"></span> 
+
+<span id="buyDropdowns" class="buyDropdowns">
+	<span class="rawAbils">Abilities:</span> &nbsp; 
 
 
-	<button id="go" onclick="checkRun()">Generate Character</button>
-	<span id="ro"></span> 
-	
-	<span style="font: 10pt helvetica; float:right;"><input type="checkbox" id="buyAbil" onclick="checkClick()"><span onclick="doClick()">Buy abilities</span></span>
-	<a href="info.html" class="info" target="_new">Info</a>
-</div>
-<div class="top2" id="topBuy">
-	Abilities: &nbsp; 
+	<span class="detailed">STR</span>
+
 	<select id="a1" onchange="addAbils(false)">
 	<option value="8" selected="selected">8</option>
 	<option value="9">9</option>
@@ -195,8 +361,8 @@ width: 100%;
 	<option value="15">15</option>
 	</select>
 
-
 	 &nbsp;  
+	 <span class="detailed">DEX</span>
 	<select id="a2" onchange="addAbils(false)">
 	<option value="8" selected="selected">8</option>
 	<option value="9">9</option>
@@ -209,6 +375,7 @@ width: 100%;
 	</select>
 
 	 &nbsp;  
+	 <span class="detailed">CON</span>
 	<select id="a3" onchange="addAbils(false)">
 	<option value="8" selected="selected">8</option>
 	<option value="9">9</option>
@@ -221,6 +388,7 @@ width: 100%;
 	</select>
 
 	 &nbsp;  
+	 <span class="detailed">INT</span>
 	<select id="a4" onchange="addAbils(false)">
 	<option value="8" selected="selected">8</option>
 	<option value="9">9</option>
@@ -233,6 +401,7 @@ width: 100%;
 	</select>
 
 	 &nbsp;  
+	 <span class="detailed">WIS</span>
 	<select id="a5" onchange="addAbils(false)">
 	<option value="8" selected="selected">8</option>
 	<option value="9">9</option>
@@ -245,6 +414,7 @@ width: 100%;
 	</select>
 
 	 &nbsp;  
+	 <span class="detailed">CHA</span>
 	<select id="a6" onchange="addAbils(false)">
 	<option value="8" selected="selected">8</option>
 	<option value="9">9</option>
@@ -256,10 +426,13 @@ width: 100%;
 	<option value="15">15</option>
 	</select>
 
-	 &nbsp; &nbsp;
-	<span id="points"></span>
-	<button id="resetabil" onclick="resetAbil()" style="float: right;">Reset Abilities</button> 
 
+	<span id="points" style="font: 10pt helvetica;"></span>
+	<button id="resetabil" onclick="resetAbil()">Reset Abilities</button> 
+</span>
+	
+	<span class="alText"><input type="checkbox" id="al" onclick="aLeague()">Adventurer's League</span>
+	
 
 </div>
 
@@ -290,18 +463,160 @@ width: 100%;
 
 <script language="javascript">
 
+
 var firstAbil=true;
 
 function checkRun() {
-	if ((document.getElementById("buyAbil").checked == true) && (addAbils(true) == true)) {
+
+	if (document.getElementById("al").checked == true) { 
+		if (document.getElementById("genMethod").value == "0") {
+			alert("Sorry, but you cannot roll abilities for Adventurer's League characters!");
+			document.getElementById("genMethod").selectedIndex = "1";
+			document.getElementById("buyDropdowns").style.display="none";	
+			document.getElementById("selAbil").style.display="none";
+			document.getElementById("ro").style.display="inline";
+
+		} 
+		if (document.getElementById("selLevel").selectedIndex != 0) {
+			alert("Sorry, but your Adventurer's League character must start at 1st level!");
+			document.getElementById("selLevel").selectedIndex = "0";	
+		}
+	}
+
+	if (((document.getElementById("genMethod").value == "2") || (document.getElementById("genMethod").value == "3")) && (addAbils(true) == true)) {
 		run();
 	} 
-	if (document.getElementById("buyAbil").checked == false) {
+	if ((document.getElementById("genMethod").value == "0") || (document.getElementById("genMethod").value == "1")) {
 		run();
 	}
 }
 
+function aLeague() {
+	if (document.getElementById("al").checked == true) {
+		document.getElementById("selLevel").selectedIndex = "0";
+		if (document.getElementById("genMethod").value == "0")  {
+			document.getElementById("genMethod").selectedIndex = "2";
+			document.getElementById("buyDropdowns").style.display="inline";		
+			document.getElementById("selAbil").style.display="none";
+			document.getElementById("ro").style.display="none";
+		}
+	if (firstAbil == true) {
+		setStandardArray();
+		firstAbil=false;
+	}
+	addAbils(false);
 
+	} 
+}
+
+function switchBuy() {
+	if (document.getElementById("genMethod").value == "0") {
+		document.getElementById("buyDropdowns").style.display="none";
+		document.getElementById("selAbil").style.display="inline";
+		document.getElementById("ro").style.display="inline";
+	}
+
+	if (document.getElementById("genMethod").value == "2") {
+		document.getElementById("buyDropdowns").style.display="inline";		
+		document.getElementById("selAbil").style.display="none";
+		document.getElementById("ro").style.display="none";
+		var x = document.getElementsByClassName("detailed");
+		for(i=0;i<x.length;i++) {
+			x[i].style.display="none";	
+		}
+		
+
+		//.style.display="inline";
+		if (firstAbil == true) {
+			setStandardArray();
+			firstAbil=false;
+		}
+		addAbils(false);
+	}
+
+	if (document.getElementById("genMethod").value == "3") {
+		document.getElementById("buyDropdowns").style.display="inline";		
+		document.getElementById("selAbil").style.display="none";
+		document.getElementById("ro").style.display="none";
+		var x = document.getElementsByClassName("detailed");
+		for(i=0;i<x.length;i++) {
+			x[i].style.display="inline";	
+		}
+		if (firstAbil == true) {
+			setStandardArray();
+			firstAbil=false;
+		}
+		addAbils(false);
+	}
+
+
+	if (document.getElementById("genMethod").value == "1") {
+		document.getElementById("buyDropdowns").style.display="none";	
+		document.getElementById("selAbil").style.display="none";
+		document.getElementById("ro").style.display="inline";
+	}
+}
+
+
+function selectClass() {
+	if (document.getElementById("selClass").value == 1) {
+		clearClassOptions();
+		document.getElementById("barbarianOptions").style.display="inline";
+		document.getElementById("selBarbarian").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 2) {
+		clearClassOptions();
+		document.getElementById("bardOptions").style.display="inline";
+		document.getElementById("selBard").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 5) {
+		clearClassOptions();
+	} else if ((document.getElementById("selClass").value == 6) || (document.getElementById("selClass").value == 7)) {
+		clearClassOptions();
+		document.getElementById("fighterOptions").style.display="inline";
+		document.getElementById("selFighter").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 8) {
+		clearClassOptions();
+		document.getElementById("monkOptions").style.display="inline";
+		document.getElementById("selMonk").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 9) {
+		clearClassOptions();
+		document.getElementById("paladinOptions").style.display="inline";
+		document.getElementById("selPaladin").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 10) {
+		clearClassOptions();
+		document.getElementById("rangerOptions").style.display="inline";
+		document.getElementById("selRanger").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 11)  {
+		clearClassOptions();
+		document.getElementById("rogueOptions").style.display="inline";
+		document.getElementById("selRogue").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 12) {
+		clearClassOptions();
+	} else if (document.getElementById("selClass").value == 13) {
+		clearClassOptions();
+		document.getElementById("sorcererOptions").style.display="inline";
+		document.getElementById("selSorcerer").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 14) {
+		clearClassOptions();
+		document.getElementById("warlockOptions").style.display="inline";
+		document.getElementById("selWarlock").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 3) {
+		clearClassOptions();
+		document.getElementById("clericOptions").style.display="inline";
+		document.getElementById("selCleric").selectedIndex = "initial";	
+	} else if (document.getElementById("selClass").value == 4) {
+		clearClassOptions();
+		document.getElementById("druidOptions").style.display="inline";
+		document.getElementById("selDruid").selectedIndex = "initial";	
+	} 
+	else if (document.getElementById("selClass").value == 15) {
+		clearClassOptions();
+		document.getElementById("wizardOptions").style.display="inline";
+		document.getElementById("selWizard").selectedIndex = "initial";	
+	} 
+}
+
+
+// give it false if you don't want an alert.  true if you want to shout at the user!
 function addAbils(bool) {
 	var ptAbil = [];
 	ptAbil.unshift(document.getElementById("a1").value * 1);
@@ -336,6 +651,20 @@ function addAbils(bool) {
 
 }
 
+function clearClassOptions() {
+	document.getElementById("wizardOptions").style.display="none";
+	document.getElementById("druidOptions").style.display="none";
+	document.getElementById("clericOptions").style.display="none";
+	document.getElementById("fighterOptions").style.display="none";
+	document.getElementById("rangerOptions").style.display="none";
+	document.getElementById("bardOptions").style.display="none";
+	document.getElementById("barbarianOptions").style.display="none";
+	document.getElementById("rogueOptions").style.display="none";
+	document.getElementById("sorcererOptions").style.display="none";
+	document.getElementById("warlockOptions").style.display="none";
+	document.getElementById("monkOptions").style.display="none";
+	document.getElementById("paladinOptions").style.display="none";
+}
 
 function reset() {
 	document.getElementById("selLevel").selectedIndex = "0";
@@ -344,7 +673,7 @@ function reset() {
 	document.getElementById("selBg").selectedIndex = "0";
 	document.getElementById("selAbil").selectedIndex = "0";
 	document.getElementById("selGender").selectedIndex = "0";
-
+	clearClassOptions();
 }
 
 
@@ -369,47 +698,70 @@ function setStandardArray() {
 }
 
 
-function checkClick() {
-	if (document.getElementById("buyAbil").checked == true) {
-		document.getElementById("topBuy").style.display="block";		
-		document.getElementById("selAbil").style.display="none";		
-		document.getElementById("ro").style.display="none";		
-		if (firstAbil == true) {
-			setStandardArray();
-			firstAbil=false;
-		}
-		addAbils(false);
-		
-	} else {
-		document.getElementById("topBuy").style.display="none";		
-		document.getElementById("selAbil").style.display="initial";		
-		document.getElementById("ro").style.display="initial";		
-	}
-
-}
-
-
-function doClick() {
-	if (document.getElementById("buyAbil").checked == true) {
-		document.getElementById("buyAbil").checked = false;
-		checkClick();
-	} else {
-		document.getElementById("buyAbil").checked = true;
-		checkClick();
-	}
-
-}
 
 
 
 function run() {
 console.log("-------------------------starting--------------------------------");
-if (document.getElementById("buyAbil").checked == true) {
-	document.getElementById("topBuy").style.display="block";
-	document.getElementById("selAbil").style.display="none";		
-	document.getElementById("ro").style.display="none";		
+			
+if ((document.getElementById("genMethod").value == "2") || (document.getElementById("genMethod").value == "3")) {
+	document.getElementById("buyDropdowns").style.display="inline";		
 }
 
+if (document.getElementById("genMethod").value == "3") {
+	var detailedStats = document.getElementsByClassName("detailed");
+	for(i=0;i<detailedStats.length;i++) {
+		detailedStats[i].style.display="inline";	
+	}
+
+}
+
+
+
+if (document.getElementById("genMethod").value != "0") {
+	document.getElementById("selAbil").style.display="none";		
+}
+if (document.getElementById("selClass").value == 15) {
+	document.getElementById("wizardOptions").style.display="inline";		
+}
+if (document.getElementById("selClass").value == 3) {
+	document.getElementById("clericOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 4) {
+	document.getElementById("druidOptions").style.display="inline";		
+}
+if (document.getElementById("selClass").value == 1) {
+	document.getElementById("barbarianOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 2) {
+	document.getElementById("bardOptions").style.display="inline";	
+}
+if ((document.getElementById("selClass").value == 6) || (document.getElementById("selClass").value == 7)) {
+	document.getElementById("fighterOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 8) {
+	document.getElementById("monkOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 9) {
+	document.getElementById("paladinOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 10) {
+	document.getElementById("rangerOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 11) {
+	document.getElementById("rogueOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 13) {
+	document.getElementById("sorcererOptions").style.display="inline";	
+}
+if (document.getElementById("selClass").value == 14) {
+	document.getElementById("warlockOptions").style.display="inline";	
+}
+
+
+var al=false;
+if (document.getElementById("al").checked == true) 
+	al=true;
 
 
 var gender=-1;
@@ -428,6 +780,26 @@ forceBg = document.getElementById("selBg").value * 1;
 var forceAbil =0;
 forceAbil = document.getElementById("selAbil").value * 1;
 
+var forceDomain =0;
+forceDomain = document.getElementById("selCleric").value * 1;
+
+var forceSchool =0;
+forceSchool = document.getElementById("selWizard").value * 1;
+
+var forceCircle =0;
+forceCircle = document.getElementById("selDruid").value * 1;
+
+var forceBarb = document.getElementById("selBarbarian").value * 1;
+var forceBard =document.getElementById("selBard").value * 1;
+var forceFigh =document.getElementById("selFighter").value * 1;
+var forceMonk =document.getElementById("selMonk").value * 1;
+var forcePala =document.getElementById("selPaladin").value * 1;
+var forceRang =document.getElementById("selRanger").value * 1;
+var forceRogu =document.getElementById("selRogue").value * 1;
+var forceSorc =document.getElementById("selSorcerer").value * 1;
+var forceWarl =document.getElementById("selWarlock").value * 1;
+var forceWarlPact =document.getElementById("selWarlockPact").value * 1;
+
 var x = 0;
 var y = 0;
 var z = 0;
@@ -437,6 +809,11 @@ var i = 0;
 var q = 0;
 var whichMagic = -1;
 var whichMagicArmor = -1;
+var magicArrowPlus=0;
+var magicArrows=0;
+var magicArrowType="";
+var magicArrowDisplay=false;
+var rangedWeapons =[];
 var mod = [0,0,0,0,0,0];
 var abil = [0,0,0,0,0,0];
 var abilNames = ["Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma"];
@@ -454,10 +831,20 @@ forceLvl = document.getElementById("selLevel").value * 1;
 var level = Math.floor((Math.random() * 10) + 1); 
 if (forceLvl > 0)
 	level =forceLvl;
+if (forceLvl == 21) 
+	level = Math.floor((Math.random() * 4) + 1); 
+if (forceLvl == 22) 
+	level = Math.floor((Math.random() * 6) + 5); 
+if (forceLvl == 23) 
+	level = Math.floor((Math.random() * 4) + 8); 
+if (forceLvl == 24) 
+	level = Math.floor((Math.random() * 4) + 12); 
+if (forceLvl == 25) 
+	level = Math.floor((Math.random() * 4) + 17); 
 
 
 
-//level =4;
+
 var prof=2;
 if (level > 4)
 	prof=3;
@@ -474,6 +861,10 @@ var moreLang=0;
 // var skills = 
 var speed=0;
 var size = "Medium";
+var factions = ["Harpers","Order of the Gauntlet","Emerald Enclave","Lords' Alliance","Zhentarim"];
+var myFaction = -1;
+var lifestyles = ["Wretched","Squalid","Poor","Modest","Comfortable","Wealthy","Artistocratic"];
+var myLifestyle = -1;
 var skills = ["Acrobatics","Animal Handling","Arcana","Athletics","Deception","History","Insight","Intimidation","Investigation","Medicine","Nature","Perception","Perform","Persuasion","Religion","Sleight of Hand","Stealth","Survival"];
 var wiCantrip = ["Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
 //NOT ENOUGH FAMILIARS. therefore, 2 find familiar spells
@@ -489,7 +880,7 @@ var patronSpells3=[];
 var patronSpells4=[];
 var patronSpells5=[];
 var soCantrip = ["Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
-var so1 = ["Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Fog Cloud","Jump","Mage Armor","Ray of Sickness","Shield","Silent Image","Sleep","Thunderwave","Witch Bolt"];
+var so1 = ["Burning Hands","Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Fog Cloud","Jump","Magic Missile","Magic Missile","Mage Armor","Ray of Sickness","Shield","Silent Image","Sleep","Thunderwave","Witch Bolt"];
 var so2 = ["Alter Self","Blindness/Deafness","Blur","Cloud of Daggers","Crown of Madness","Darkness","Darkvision","Detect Thoughts","Enhance Ability","Enlarge/Reduce","Gust of Wind","Hold Person","Invisibility","Knock","Levitate","Mirror Image","Misty Step","Phantasmal Force","Scorching Ray","See Invisibility","Shatter","Spider Climb","Suggestion","Web"];
 var ra1 = ["Alarm","Animal Friendship","Cure Wounds","Detect Magic","Detect Poison and Disease","Ensnaring Strike","Fog Cloud","Goodberry","Hail of Thorns","Hunter's Mark","Jump","Longstrider","Speak with Animals"];
 var pa1 = ["Bless","Command","Compelled Duel","Cure Wounds","Detect Evil and Good","Detect Magic","Detect Poison and Disease","Divine Favor","Heroism","Protection from Evil and Good","Purify Food and Drink","Searing Smite","Shield of Faith","Thunderous Smite","Wrathful Smite"];
@@ -521,6 +912,35 @@ var ba4 = ["Compulsion","Confusion","Dimension Door","Freedom of Movement","Grea
 var ba5 = ["Animate Objects","Awaken","Dominate Person","Dream","Geas","Greater Restoration","Hold Monster","Legend Lore","Mass Cure Wounds","Mislead","Modify Memory","Planar Binding","Raise Dead","Scrying","Seeming","Teleportation Circle"];
 var pa3 = ["Aura of Vitality","Blinding Smite","Create Food and Water","Crusader's Mantle","Daylight","Dispel Magic","Elemental Weapon"];
 var ra3 = ["Conjure Animals","Conjure Barrage","Daylight","Lightning Arrow","Nondetection","Plant Growth","Protection from Energy","Speak with Plants","Water Breathing","Water Walk","Wind Wall"];
+
+
+var scrollBardUnc = ["Cure Wounds","Speak with Dead","Fear","Invisibility","Dispel Magic","Polymorph","Major Image"];
+var scrollBardRare = ["Animate Objects","Hold Monster","Guards and Wards","Raise Dead"];
+var scrollBardVery = ["Teleport","Power Word Kill","Power Word Stun"];
+
+var scrollClerUnc = ["Prayer of Healing","Prayer of Healing","Magic Circle","Aid","Tongues","Mass Healing Word","Revivify","Revivify","Guardian of Faith"];
+var scrollClerRare = ["Flame Strike","Mass Cure Wounds","Blade Barrier","Raise Dead","Heal"];
+var scrollClerVery = ["Control Weather","Regenerate","Heal","True Resurrection","Gate"];
+
+var scrollDruiUnc = ["Cure Wounds","Conjure Animals","Conjure Minor Elementals","Hold Person","Water Breathing"];
+var scrollDruiRare = ["Mass Cure Wounds","Scrying","Dominate Beast","Heal"];
+var scrollDruiVery = ["Heal","Wall of Thorns","Earthquake","True Resurrection","Tsunami"];
+
+var scrollPalaUnc = ["Cure Wounds","Blinding Smite","Dispel Magic","Aura of Life","Detect Magic","Aid"];
+var scrollPalaRare = ["Raise Dead","Geas","Banishing Smite"];
+var scrollPalaVery = ["Raise Dead","Geas","Banishing Smite"];
+
+var scrollRangUnc = ["Cure Wounds","Lightning Arrow","Conjure Barrage","Water Breathing"];
+var scrollRangRare = ["Conjure Volley","Swift Quiver"];
+var scrollRangVery = ["Conjure Volley","Swift Quiver"];
+
+var scrollWarlUnc = ["Vampiric Touch","Tongues","Gaseous Form","Fear","Spider Climb","Comprehend Languages","Shatter"];
+var scrollWarlRare = ["Blight","Scrying","Hold Monster","Conjure Fey",];
+var scrollWarlVery = ["Mass Suggestion","Finger of Death","Power Word Stun"];
+
+var scrollWizaUnc = ["Fireball","Haste","Slow","Fly","Knock","Lightning Bolt","Water Breathing","Dispel Magic"];
+var scrollWizaRare = ["Greater Invisibility","Wall of Fire","Ice Storm"];
+var scrollWizaVery = ["Mass Suggestion","Plane Shift","Delayed Blast Fireball"];
 
 
 
@@ -588,7 +1008,7 @@ var hasArmor = -1;
 //  show numbers of all 1st level spells
 
 var skLearn = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
-
+allArrays=[[15,15,15,8,8,8],[15,15,14,10,8,8],[15,15,14,9,9,8],[15,15,13,12,8,8],[15,15,13,11,9,8],[15,15,13,10,10,8],[15,15,13,10,9,9],[15,15,12,12,9,8],[15,15,12,11,10,8],[15,15,12,11,9,9],[15,15,12,10,10,9],[15,15,11,11,11,8],[15,15,11,11,10,9],[15,15,11,10,10,10],[15,14,14,12,8,8],[15,14,14,11,9,8],[15,14,14,10,10,8],[15,14,14,10,9,9],[15,14,13,13,9,8],[15,14,13,12,10,8],[15,14,13,12,9,9],[15,14,13,11,11,8],[15,14,13,11,10,9],[15,14,13,10,10,10],[15,14,12,12,11,8],[15,14,12,12,10,9],[15,14,12,11,11,9],[15,14,12,11,10,10],[15,14,11,11,11,10],[15,13,13,13,11,8],[15,13,13,13,10,9],[15,13,13,12,12,8],[15,13,13,12,11,9],[15,13,13,12,10,10],[15,13,13,11,11,10],[15,13,12,12,12,9],[15,13,12,12,11,10],[15,13,12,11,11,11],[15,12,12,12,12,10],[15,12,12,12,11,11],[14,14,14,13,9,8],[14,14,14,12,10,8],[14,14,14,12,9,9],[14,14,14,11,11,8],[14,14,14,11,10,9],[14,14,14,10,10,10],[14,14,13,13,11,8],[14,14,13,13,10,9],[14,14,13,12,12,8],[14,14,13,12,11,9],[14,14,13,12,10,10],[14,14,13,11,11,10],[14,14,12,12,12,9],[14,14,12,12,11,10],[14,14,12,11,11,11],[14,13,13,13,13,8],[14,13,13,13,12,9],[14,13,13,13,11,10],[14,13,13,12,12,10],[14,13,13,12,11,11],[14,13,12,12,12,11],[14,12,12,12,12,12],[13,13,13,13,13,10],[13,13,13,13,12,11],[13,13,13,12,12,12]];
 var skAbil = [1,4,3,0,5,3,4,5,3,4,3,4,5,5,3,1,1,4];
 var skOutput = "";
 var abOutput = "";
@@ -636,12 +1056,24 @@ var companionsDamageBonus2 = [0,2,0,1,0];
 
 var music = ["Lute", "Flute","Harp", "Fiddle","Pipes", "Drums", "Bagpipes","Dulcimer","Lyre","Horn","Guitar","Pan flute","Shawm","Viol"];
 var gaming = ["Dice games", "Dragonchess","Playing cards","Three-Dragon Ante"];
-var valuables = ["Gold Nugget","Gold Figurine","Silver Cutlery","Bag of Gold Dust","Jeweled Helmet","Jeweled Dagger","Rare Book","Rare Map","Silver Wand","Jeweled Copper Helmet", "Silver Ring", "Silver Jewelry Box","Jeweled Copper Bracelet","Finely-crafted Copper Necklace","Rare Hunting Trophy","Engraved Silver Plate","Engraved Silver Holy Symbol","Jeweled Copper Holy Symbol","Silver Tobacco Box","Silver and Leather Bound Book","Copper and Leather Bound Book","Pieces of Plate Mail","Silver Chain","Finely-crafted Silk Robe", "Silver Dice","Finely-crafted Silver and Leather Shoes","Bottle of Rare Wine","Leather and Silver Quiver","Gold Belt Buckle","Dragonchess Set with Silver Pieces","Gold Dragonchess Pieces","Finely-crafted Viol","Finely-crafted Lute","Jeweled Dog Collar","Collection of Rare Coins","Exceptional Painting","Pearl","Rare Gold and Silk Military Medal","Finely-crafted Crystal Slop Bucket","Silver Ceremonial Dagger","Half of a severely burned, barely legible Spellbook","Silver and Wood Ceremonial Mask", "Gold and Wood Longstemmed Pipe","Small Gold Bell","Arrow Made of Gold","Silver Clockwork Toy","Small gem","Small gem", "Diamond", "Bag of Rare Herbs","Small Gold Framed Mirror"];
+var valuables = ["Gold Nugget","Gold Figurine","Silver Cutlery","Bag of Gold Dust","Jeweled Helmet","Jeweled Dagger","Rare Book","Rare Map","Silver Wand","Jeweled Copper Helmet", "Silver Ring", "Silver Jewelry Box","Jeweled Copper Bracelet","Finely-crafted Copper Necklace","Rare Hunting Trophy","Engraved Silver Plate","Engraved Silver Holy Symbol","Jeweled Copper Holy Symbol","Silver Tobacco Box","Silver and Leather Bound Book","Gold and Leather Bound Book","Pieces of Plate Mail","Silver Chain","Finely-crafted Silk Robe","Silver Dice","Golden Dice","Finely-crafted Silver and Leather Shoes","Bottle of Rare Wine","Leather and Silver Quiver","Gold Belt Buckle","Dragonchess Set with Silver Pieces","Gold Dragonchess Pieces","Finely-crafted Viol","Finely-crafted Lute","Collection of Rare Coins","Exceptional Painting","Pearl","Pearl","Rare Gold and Silk Military Medal","Finely-crafted Crystal Slop Bucket","Silver Ceremonial Dagger","Half of a severely burned, barely legible spellbook","Silver and Wood Ceremonial Mask", "Gold and Wood Longstemmed Pipe","Small Gold Bell","Arrow Made of Gold","Silver Clockwork Toy","Small gem","Small gem","Small gem","Diamond","Bag of Very Rare Herbs","Small Gold Framed Mirror"];
 var jewelry = ["Ring","Necklace","Pendant","Bracelets","Bracers","Tiara","Earrings","Amulet","Chalice","Ornamental Dagger","Bowl","Statuette","Goblet","Crown","Flute","Holy Symbol","and Wood Hand Crossbow","Ceremonial Saber","and Wood Lute", "and Wood Staff","and Wood Dragonchess Set","Hourglass","Pitcher","Medallion","Harp","Scepter","Drinking Horn","Gnome Music Box"];
 var jewelryAdjectives = ["Finely-crafted Gold","Gold","Jeweled Gold","Finely-crafted Silver","Jeweled Copper","Jeweled Silver","Jeweled Electrum","Silver and Ivory"];
 var jewelryRare = ["Ring","Necklace","Amulet","Chalice","Crown","Tiara","Goblet","Pendant","Ornamental Dagger","Scepter"];
-var jewelryAdjectivesRare = ["Platinum","Jeweled Gold","Jeweled Platinum","Diamond and Silver","Gold and Ruby"];
+var jewelryAdjectivesRare = ["Platinum","Jeweled Gold","Jeweled Platinum","Diamond and Silver","Platinum and Ruby","Gold and Ruby","Gold and Sapphire"];
+var magicUncommon = ["Bag of Holding","Boots of Striding and Springing","Cloak of Elvenkind","Gloves of Swimming and Climbing","Goggles of Night","Keoghtom's Ointment","Wand of Magic Detection (3 charges)","Wand of Magic Missiles (7 charges)"];
+//"Gauntlets of Ogre Power","Headband of Intellect",
+var magicRare = ["Ring of Evasion (3 charges)","Ring of Protection","Ring of Resistance"];
+//"Amulet of Health",
+var magicVeryRare = ["Potion of Flying","Potion of Invisibility","Potion of Vitality"];
+poisonUncommon = ["Assassin’s blood (Ingested)","Carrion crawler mucus  (Contact)","Drow poison  (Injury)","Essence of ether  (Inhaled)","Malice  (Inhaled)","Pale tincture  (Ingested)","Serpent venom  (Injury)","Truth serum  (Ingested)"];
+Rare = ["Torpor  (Ingested)","Burnt othur fumes  (Inhaled)","Oil of taggit  (Contact)"];
+VeryRare =["Wyvern  poison (Injury)","Purple worm poison (Injury)","Midnight tears  (Ingested)"]
+
+//var magicUncommon = ["","","","","","","","","","","","","","","","","","","","","","",]
+
 var magicWeapon =0;
+var bootsOfSS = false;
 var magicArmor =0;
 var ringStone = ["Pearl","Tourmaline","Garnet","Sapphire","Citrine","Jet","Amethyst","Jade","Topaz","Spinel"];
 var ringResistance  = ["Acid","Cold","Fire","Force","Lightning","Necrotic","Poison","Psychic","Radiant","Thunder"];
@@ -708,6 +1140,7 @@ var bg=0;
 var eqOutput = "";
 var weOutput = "";
 var maOutput = "";
+var poOutput = "";
 var temp = "";
 var tempSpells =[];
 var sp1=0;
@@ -781,7 +1214,7 @@ function upgradeRare() {
 function upgradeVeryRare() {
 	// half as likely as upgraderare
 	x=((level * level) / 4) * .01;
-	if (level ==1)
+	if (level < 5)
 		x=0;
 	if (Math.random() < x)
 		return true;
@@ -792,15 +1225,12 @@ function upgradeVeryRare() {
 
 
 function warriorArmor() {
-	
-	
 	if (mod[1] >3) {
-	
 		if ((upgrade() == true) && (level>1)) {
 				myAr.push(armors[3]);
 		} else {
 				myAr.push(armors[2]);
-			}
+		}
 	} else if ((mod[1] > 0) && (level > 1) && (upgrade() == true)) {
 	
 		if (upgrade() == true)  {
@@ -826,9 +1256,9 @@ function warriorArmor() {
 			myAr.push(armors[9]);
 		}
 	}
-
-
 }
+
+
 
 function dwarfMagicArmor() {
 	if ((level > 1) && (racetxt == "Mountain Dwarf")) {
@@ -1044,12 +1474,14 @@ function showAbil () {
 	output += "Ability scores:   &nbsp; STR:  " + abil[0] + " (" + showPlus( mod[0] ) + ") &nbsp; DEX:  " + abil[1] + " (" + showPlus( mod[1] ) + ") &nbsp; CON: " + abil[2]  + " ("+ showPlus( mod[2] ) +
 		") &nbsp; INT: " + abil[3] + " ("+showPlus ( mod[3] )+") &nbsp;  WIS: " + abil[4] + " ("+showPlus ( mod[4] )+") &nbsp; CHA: " + abil[5] + " ("+showPlus ( mod[5] )+
 		")<br>Saving throws:  &nbsp; STR:  " + showPlus( saves[0] ) + " &nbsp; DEX:  " + showPlus( saves[1] ) + "  &nbsp; CON: " +  showPlus( saves[2] ) + " &nbsp; INT: " + showPlus ( saves[3] )+" &nbsp;  WIS: " + showPlus ( saves[4] )+" &nbsp; CHA: " +showPlus ( saves[5] )+
-		"<br>Initiative:  " + showPlus( initiative ) + " &nbsp; Speed:  " + speed +  " &nbsp; Passive perception:  " + passive +" &nbsp; Size:  " + size+" &nbsp; Proficiency bonus:  " + showPlus(prof);
+		"<br>Initiative:  " + showPlus( initiative ) + " &nbsp; Speed:  " + speed;
 
-	gender = Math.floor(Math.random() * 2) +1;
-	if (forceGender > 0) {
-		gender=forceGender;
-	}
+		//show bonus for boots of striding and sprinigng
+		if ((bootsOfSS == true) && (speed < 30)) 
+			output += " (30 with boots)";
+		
+		output += " &nbsp; Passive perception:  " + passive +" &nbsp; Size:  " + size+" &nbsp; Proficiency bonus:  " + showPlus(prof);
+
 	if (gender==2) {
 		output += " &nbsp; Gender: Female";
 	} else {
@@ -1157,11 +1589,11 @@ switch (x) {
 }
 
 
-if (Math.random() > 0.5) {
-	gender=0;
-} else {
-	gender=1;
+gender = Math.floor(Math.random() * 2) +1;
+if (forceGender > 0) {
+	gender=forceGender;
 }
+
 var rollOutput = "";
 var abilRaw = [0,0,0,0,0,0];
 var lowest = -1;
@@ -1169,7 +1601,14 @@ bool=false;
 var sum=0;
 
 //buy points or roll
-if (document.getElementById("buyAbil").checked == true) {
+
+if (document.getElementById("genMethod").value == "1") {
+	abilRaw = [];
+	x=Math.floor(Math.random() * allArrays.length);
+	abilRaw = allArrays[x];
+	console.log("Array picked = "+abilRaw);
+	rollOutput += "Random array:  " + abilRaw;
+} else if (document.getElementById("genMethod").value == "2") {
 	abilRaw = [];
 	abilRaw.unshift(document.getElementById("a1").value * 1);
 	abilRaw.unshift(document.getElementById("a2").value * 1);
@@ -1178,9 +1617,17 @@ if (document.getElementById("buyAbil").checked == true) {
 	abilRaw.unshift(document.getElementById("a5").value * 1);
 	abilRaw.unshift(document.getElementById("a6").value * 1);
 	abilRaw.sort(function(a,b){return b-a});
+} else if (document.getElementById("genMethod").value == "3") {
+	abil[0]=document.getElementById("a1").value * 1;
+	abil[1]=document.getElementById("a2").value * 1;
+	abil[2]=document.getElementById("a3").value * 1;
+	abil[3]=document.getElementById("a4").value * 1;
+	abil[4]=document.getElementById("a5").value * 1;
+	abil[5]=document.getElementById("a6").value * 1;
+	
 } else {
 
-	rollOutput += "Ability rolls:  " 
+	rollOutput += "Ability rolls:  ";
 	y=0;
 	z=65;
 	if (forceAbil > 0)
@@ -1202,7 +1649,7 @@ if (document.getElementById("buyAbil").checked == true) {
 		} else
 			rollOutput += "adds up to " +i + " (" + abilRaw+ ")!  Starting over!  ";
 	} 
-	rollOutput = abilRaw + "=" +i + " total"
+	rollOutput = "Rolls: " + abilRaw + "=" +i + " total";
 	console.log(rollOutput);
 	console.log(y + " rolls to get an acceptable sum");
 	console.log("average roll = " + (sum/y));
@@ -1220,6 +1667,7 @@ racetxt = "";
 // 	1 in 4 chance of non-elf/dwarf/half/hum
 //exotic=1;
 if (exotic == 1) {
+	abOutput+="<b>Racial Traits:</b> ";
 	ra = Math.floor((Math.random() * 7) + 1); 
 
 	if (forceRace > 0)
@@ -1240,7 +1688,7 @@ if (exotic == 1) {
 		elemType = tempAr[1];
 		breathType = tempAr[2];
 		abOutput += "Draconic Ancestry (" + dragType +  "), Breath Weapon (" + elemType + " damage in a "+breathType+"), Damage Resistance (" + elemType + ")"; 
-		if (gender==0) {
+		if (gender==2) {
 			name = dragonNameF[Math.floor(Math.random() * dragonNameF.length)];
 		} else {
 			name = dragonNameM[Math.floor(Math.random() * dragonNameM.length)];
@@ -1258,7 +1706,7 @@ if (exotic == 1) {
 		abOutput += "Darkvision, Gnome Cunning, Natural Illusionist, Speak with Small Animals";
 		raceSpells.push("Minor Illusion");	
 		raceSpellAbility=3;
-		if (gender==0) {
+		if (gender==2) {
 			name = gnomeNameF[Math.floor(Math.random() * gnomeNameF.length)];
 		} else {
 			name = gnomeNameM[Math.floor(Math.random() * gnomeNameM.length)];
@@ -1276,14 +1724,14 @@ if (exotic == 1) {
 		abOutput += "Darkvision, Fey Ancestry, 2 skills";
 		mySkills = [];
 		if (Math.random() > 0.5) {
-			if (gender==0) {
+			if (gender==2) {
 				name = humanNameF[Math.floor(Math.random() * humanNameF.length)];
 			} else {
 				name = humanNameM[Math.floor(Math.random() * humanNameM.length)];
 			}
 			name += " " + humanNameLast[Math.floor(Math.random() * humanNameLast.length)];
 		} else {
-			if (gender==0) {
+			if (gender==2) {
 				name = elfNameF[Math.floor(Math.random() * elfNameF.length)];
 			} else {
 				name = elfNameM[Math.floor(Math.random() * elfNameM.length)];
@@ -1304,13 +1752,13 @@ if (exotic == 1) {
 
 		abOutput += "Darkvision, Menacing (Intimidate skill), Relentless Endurance, Savage Attack";
 		if (Math.random() > 0.5) {
-			if (gender==0) {
+			if (gender==2) {
 				name = orcNameF[Math.floor(Math.random() * orcNameF.length)];
 			} else {
 				name = orcNameM[Math.floor(Math.random() * orcNameM.length)];
 			}
 		} else {
-			if (gender==0) {
+			if (gender==2) {
 				name = humanNameF[Math.floor(Math.random() * humanNameF.length)];
 			} else {
 				name = humanNameM[Math.floor(Math.random() * humanNameM.length)];
@@ -1333,7 +1781,7 @@ if (exotic == 1) {
 		if (level > 4)
 			raceSpells.push("Darkness (once a day)");
 
-		if (gender==0) {
+		if (gender==2) {
 			name = tieflingNameF[Math.floor(Math.random() * tieflingNameF.length)];
 		} else {
 			name = tieflingNameM[Math.floor(Math.random() * tieflingNameM.length)];
@@ -1357,7 +1805,7 @@ if (exotic == 1) {
 			raceSpells.push("Faerie Fire (once a day)");
 		if (level > 4)
 			raceSpells.push("Darkness (once a day) ");
-		if (gender==0) {
+		if (gender==2) {
 			name = elfNameF[Math.floor(Math.random() * elfNameF.length)];
 		} else {
 			name = elfNameM[Math.floor(Math.random() * elfNameM.length)];
@@ -1372,7 +1820,7 @@ if (exotic == 1) {
 		abil[2] += 1;
 		size="Small";
 		languageOutput = "Common, Gnomish";
-		if (gender==0) {
+		if (gender==2) {
 			name = gnomeNameF[Math.floor(Math.random() * gnomeNameF.length)];
 		} else {
 			name = gnomeNameM[Math.floor(Math.random() * gnomeNameM.length)];
@@ -1390,7 +1838,8 @@ else	{
 	if (forceRace > 10)
 		ra = forceRace-10;
 
-
+	if (ra != 3)
+		abOutput+="<b>Racial Traits:</b> ";
 
 	switch (ra) {
 	case (1):
@@ -1415,7 +1864,7 @@ else	{
 			}
 		abOutput += ", Stonecunning, Dwarven toughness"
 
-		if (gender==0) {
+		if (gender==2) {
 			name = dwarfNameF[Math.floor(Math.random() * dwarfNameF.length)];
 		} else {
 			name = dwarfNameM[Math.floor(Math.random() * dwarfNameM.length)];
@@ -1444,7 +1893,7 @@ else	{
 				break;
 			}
 		abOutput += ", Stonecunning"
-		if (gender==0) {
+		if (gender==2) {
 			name = dwarfNameF[Math.floor(Math.random() * dwarfNameF.length)];
 		} else {
 			name = dwarfNameM[Math.floor(Math.random() * dwarfNameM.length)];
@@ -1459,7 +1908,7 @@ else	{
 		languageOutput = "Common";
 		speed=30;
 		moreLang += 1;
-		if (gender==0) {
+		if (gender==2) {
 			name = humanNameF[Math.floor(Math.random() * humanNameF.length)];
 		} else {
 			name = humanNameM[Math.floor(Math.random() * humanNameM.length)];
@@ -1479,7 +1928,7 @@ else	{
 		mySkills.push(11);
 
 		abOutput += "Darkvision, Keen senses, Fey ancestry, Trance, Cantrip, Extra Language";
-		if (gender==0) {
+		if (gender==2) {
 			name = elfNameF[Math.floor(Math.random() * elfNameF.length)];
 		} else {
 			name = elfNameM[Math.floor(Math.random() * elfNameM.length)];
@@ -1496,7 +1945,7 @@ else	{
 		abOutput += "Darkvision, Keen senses, Fey ancestry, Trance, Mask of the Wild";
 		skLearn[11] = true;
 		mySkills.push(11);
-		if (gender==0) {
+		if (gender==2) {
 			name = elfNameF[Math.floor(Math.random() * elfNameF.length)];
 		} else {
 			name = elfNameM[Math.floor(Math.random() * elfNameM.length)];
@@ -1512,7 +1961,7 @@ else	{
 		languageOutput = "Common, Halfling";
 		abOutput += "Lucky, Brave, Halfling Nimbleness, Stout Resilience";
 		speed=25;
-		if (gender==0) {
+		if (gender==2) {
 			name = halfNameF[Math.floor(Math.random() * halfNameF.length)];
 		} else {
 			name = halfNameM[Math.floor(Math.random() * halfNameM.length)];
@@ -1527,7 +1976,7 @@ else	{
 		languageOutput = "Common, Halfling";
 		abOutput += "Lucky, Brave, Halfling Nimbleness, Naturally Stealthy";
 		speed=25;
-		if (gender==0) {
+		if (gender==2) {
 			name = halfNameF[Math.floor(Math.random() * halfNameF.length)];
 		} else {
 			name = halfNameM[Math.floor(Math.random() * halfNameM.length)];
@@ -1539,6 +1988,11 @@ else	{
 
 }
 
+
+if (racetxt != "Human")
+	abOutput += "<br>"
+
+abOutput += "<b>Abilities:</b> ";
 
 console.log("Racial bonuses:");
 for (i=0;i<6;i++)
@@ -1581,28 +2035,44 @@ switch (cl) {
 		if (level > 15)
 			y=4;
 		
-		abOutput += ", Rage (" + x + " Rages, "+ showPlus( y ) + " damage), Unarmored Defense";
+		abOutput += "Rage (" + x + " Rages, "+ showPlus( y ) + " damage), Unarmored Defense";
 
 		if (level >1)
 			abOutput += ", Reckless Attack, Danger Sense";			
 		if (level >2) {
+			x=Math.random();
+			if (forceBarb==0) {
+				x=0;
+			} else if (forceBarb>0) {
+				x=1;
+			}
 			abOutput += ", Primal Path";			
-			if (Math.random() < 0.5) {
+			if (x < 0.5) {
 				classtxt += " (Path of the Berserker)";
 				abOutput += " (Path of the Berserker)";
 
 				abOutput += ", Frenzy";
 			} else {
-				classtxt += " (Path of the Totem Warrior)";
+				classtxt += " (Path of the Totem Warrior &mdash; ";
 				abOutput += " (Path of the Totem Warrior)";
 				abOutput += ", Spirit Seeker, Totem Spirit";
 				x=Math.floor(Math.random() * 3); 	
-				if (x==0)
+				
+				if (forceBarb>1)
+					x=forceBarb-2;
+
+				if (x==0) {
 					abOutput += " (Bear)";
-				if (x==1)
+					classtxt += "Bear)";
+				}
+				if (x==1) {
 					abOutput += " (Eagle)";
-				if (x==2)
+					classtxt += "Eagle)";
+				}
+				if (x==2) {
 					abOutput += " (Wolf)";
+					classtxt += "Wolf)";
+				}
 			}
 		}
 		if (level >4) {
@@ -1633,7 +2103,7 @@ switch (cl) {
 		ab2=1;
 		bg=4;	
 		st=[1,5];	
-		abOutput += ", Spellcasting, Bardic Inspiration (";		
+		abOutput += "Spellcasting, Bardic Inspiration (";		
 		if (level > 9) {
 			abOutput += "d10)";
 		} else if (level > 4) {
@@ -1641,6 +2111,7 @@ switch (cl) {
 		} else {
 			abOutput += "d6)";
 		}
+//		abOutput += mod[5] + " uses)"
 
 		//Can play 3 musical instruments,
 		for (i=0;i < 3;i++) {
@@ -1673,7 +2144,14 @@ switch (cl) {
 		}
 
 		if (level > 2) {
-			if (Math.random() > 0.5) {
+			x=Math.random();
+			if (forceBard == 0) 
+				x=1;
+			else if (forceBard==1)
+				x=0;
+
+			
+			if (x > 0.5) {
 				abOutput += ", Bard College (Lore), Bonus proficiencies, Cutting words";
 				classtxt += " (College of Lore)";
 				if (level>5)  {
@@ -1708,9 +2186,11 @@ switch (cl) {
 		ab3=2;
 		bg=1;
 		st=[4,5];
-		abOutput += ", Spellcasting, Divine Domain";				
-		clDomain = Math.floor(Math.random() * 7); 
-		
+		abOutput += "Spellcasting, Divine Domain";				
+		clDomain = Math.floor(Math.random() * 8); 
+		if ((forceDomain > -1) && (document.getElementById("selClass").value == 3)) {
+			clDomain = forceDomain;
+		}
 
 		//clDomain=0;
 		switch (clDomain) {
@@ -1725,40 +2205,35 @@ switch (cl) {
 					expertise.push(y);
 				}
 				if (level > 1)
-					abOutput += ", Channel Divinity (Turn Undead, Knowledge of the Ages";				
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Knowledge of the Ages";				
 				if (level > 5) {
-					abOutput += ", Read Thoughts";
+					abOutput += ", Channel Divinity: Read Thoughts";
 				}
 				if (level > 7) {
 					abOutput += ", Potent Spellcasting";
 				}
-				if (level > 1)
-					abOutput += ")"
 				break;
 			case 1:
 				classtxt += "Life";
 
 				abOutput += ", Bonus proficiency, Discipline of Life";
 				if (level > 1)
-					abOutput += ", Channel Divinity (Turn Undead, Preserve Life";				
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Preserve Life (heals " + (5*level) + " hp)";				
 				if (level > 5) {
 					abOutput += ", Blessed Healer";
 				}
 
 				if (level > 7) {
-					abOutput += ", Divine Strike - 1d8 Radiant dmg";
+					abOutput += ", Divine Strike +1d8 Radiant dmg";
 				}
 
-				if (level > 1)
-					abOutput += ")"
-	
 				break;
 			case 2:
 				classtxt += "Light";
 				abOutput += ", Bonus proficiency, Warding Flare";
 				myCantrips.unshift("Light");	
 				if (level > 1)
-					abOutput += ", Channel Divinity (Turn Undead, Radiance of the Dawn";				
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Radiance of the Dawn";				
 				if (level > 5) {
 					abOutput += ", Improved Flare";
 				}
@@ -1767,15 +2242,12 @@ switch (cl) {
 				}
 
 
-				if (level > 1)
-					abOutput += ")"
-
 				break;
 			case 3:
 				classtxt += "Nature";
 				abOutput += ", Acolyte of Nature, Bonus proficiency";
 				if (level > 1)
-					abOutput += ", Channel Divinity (Turn Undead, Charm Animals and Plants";				
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Charm Animals and Plants";				
 				if (level > 5) {
 					abOutput += ", Dampen Elements";
 				}
@@ -1784,15 +2256,12 @@ switch (cl) {
 					abOutput += ", Divine Strike - 1d8 Cold, Fire, or Lighting dmg";
 				}
 
-				if (level > 1)
-					abOutput += ")"
-	
 				break;
 			case 4:
 				classtxt += "Tempest";
 				abOutput += ", Bonus proficiency, Wrath of the Storm";
 				if (level > 1)
-					abOutput += ", Channel Divinity (Turn Undead, Destructive Wrath";				
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Destructive Wrath";				
 				if (level > 5) {
 					abOutput += ", Thunderbolt Strike";
 				}
@@ -1801,44 +2270,50 @@ switch (cl) {
 					abOutput += ", Divine Strike - 1d8 Thunder dmg";
 				}
 
-				if (level > 1)
-					abOutput += ")"
-
 				break;
 			case 5:
 				classtxt += "Trickery";
 				abOutput += ", Blessing of the Trickster";
 				if (level > 1)
-					abOutput += ", Channel Divinity (Turn Undead, Invoke Duplicity";				
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Invoke Duplicity";				
 				if (level > 5) {
-					abOutput += ", Cloak of Shadows";
+					abOutput += ", Channel Divinity: Cloak of Shadows";
 				}
 				if (level > 7) {
 					abOutput += ", Divine Strike - 1d8 Poison dmg";
 				}
 
 
-				if (level > 1)
-					abOutput += ")"
 
 				break;
 			case 6:
 				classtxt += "War";
 				abOutput += ", Bonus proficiency, War Priest";
 				if (level > 1)
-					abOutput += ", Channel Divinity (Turn Undead, Guided Strike";				
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Guided Strike";				
 				if (level > 5) {
-					abOutput += ", War God's Blessing";
+					abOutput += ", Channel Divinity: War God's Blessing";
 				}
 				if (level > 7) {
 					abOutput += ", Divine Strike (1d8 Extra Weapon dmg)";
 				}
 
 
-				if (level > 1)
-					abOutput += ")"
-
 				break;
+			case 7:
+				classtxt += "Death";
+				abOutput += ", Bonus proficiency, Reaper";
+				if (level > 1) {
+					x=5 + (level * 2);
+					abOutput += ", Channel Divinity: Turn Undead, Channel Divinity: Touch of Death " + showPlus( x ) + "  necrotic damage";				
+				}
+				if (level > 5) {
+					abOutput += ", Inescapable Destruction";
+				}
+				if (level > 7) {
+					abOutput += ", Divine Strike +1d8 necrotic damage";
+				}
+				break;			
 		}
 		classtxt += " domain)";
 		if (level > 7) {
@@ -1862,14 +2337,25 @@ switch (cl) {
 		st=[3,4];
 		toOutput += ", Herbalism kit";
 		languageOutput += ", Druidic";
-		abOutput += ", Druidic, Spellcasting";
+		abOutput += "Spellcasting";
+		xx = -1;
+		if ((forceCircle > -1) && (document.getElementById("selClass").value == 4)) {
+			xx = forceCircle;
+		}
+		
+		x = Math.random();
+		//if player chose circle of moon then don't allow him to randomly get cirlce of land
+		if (xx == 0) {
+			x=1;
+		}
+
 		
 		if (level > 1) {
 			abOutput += ", Wild Shape";				
 
 			//choose cirlce of moon or circle of land.  
 			// circle of land 1st
-			if (Math.random() < 0.5) {
+			if ((x < 0.5) || (xx > 0)) {
 
 				//show 2nd levl abilities to wild shape
 				if (level < 4) {
@@ -1884,6 +2370,11 @@ switch (cl) {
 
 				drCircle = 0;
 				x=Math.floor(Math.random() * 8); 	
+
+				//set circle of land to user's choice
+				if (xx > 0)
+					x = xx-1;
+
 				if (x==0) {
 					land += "Arctic";
 					if (level >2) {
@@ -2104,7 +2595,7 @@ switch (cl) {
 		ab3=1;
 		hd=10;
 		bg=12;
-		st=[1,2];
+		st=[0,2];
 		fiStyle=Math.floor(Math.random() * 6); 	
 		switch (fiStyle) {
 			case 0:
@@ -2127,7 +2618,7 @@ switch (cl) {
 				break;
 		}
 
-		abOutput += ", Fighting Style ("+temp+"), Second Wind";				
+		abOutput += "Fighting Style ("+temp+"), Second Wind";				
 
 		if (level > 1)
 			abOutput += ", Action Surge";				
@@ -2158,7 +2649,7 @@ switch (cl) {
 		ab3=0;
 		hd=10;
 		bg=12;
-		st=[1,2];
+		st=[0,2];
 
 		x=Math.floor(Math.random() * 4); 	
 		
@@ -2187,14 +2678,19 @@ switch (cl) {
 				break;
 		}
 
-		abOutput += ", Fighting Style ("+temp+"), Second Wind";				
+		abOutput += "Fighting Style ("+temp+"), Second Wind";				
 
 		if (level > 1)
 			abOutput += ", Action Surge";				
 
 
 		if (level > 2) {
-			if (Math.random() < 0.5) {
+			x=Math.random();
+			if (forceFigh > -1) {
+				x=forceFigh;
+			} 
+
+			if (x < 0.5) {
 				classtxt += " (Champion)";
 				abOutput += ", Martial Archetype (Champion), Improved Critical";				
 				if (level > 6) {
@@ -2203,10 +2699,8 @@ switch (cl) {
 				if (level > 9) {
 					abOutput += ", Additional Fighting Style (";									
 					x=fiStyle;
-					while (x==fiStyle) {
+					while ((x==fiStyle) || (x==3)) {
 						x=Math.floor(Math.random() * 6); 	
-						if (x==3)
-							x=fiStyle;
 					}
 
 					switch (x) {
@@ -2286,7 +2780,7 @@ switch (cl) {
 		ab3=1;
 		hd=10;
 		bg=12;
-		st=[1,2];
+		st=[0,2];
 
 		//archery unlikely to be style
 		if (Math.random() > 0.93) {
@@ -2318,7 +2812,7 @@ switch (cl) {
 		}
 
 
-		abOutput += ", Fighting Style ("+temp+"), Second Wind";				
+		abOutput += "Fighting Style ("+temp+"), Second Wind";				
 
 		if (level > 1)
 			abOutput += ", Action Surge";				
@@ -2326,7 +2820,12 @@ switch (cl) {
 
 		if (level > 2) {
 			temp="";
-			if (Math.random() < 0.5) {
+			x=Math.random();
+			if (forceFigh > -1) {
+				x=forceFigh;
+			} 
+			
+			if (x < 0.5) {
 
 				classtxt += " (Champion)";
 				abOutput += ", Martial Archetype (Champion), Improved Critical";				
@@ -2440,7 +2939,7 @@ switch (cl) {
 
 		}
 
-		abOutput += ", Unarmored Defense, Martial Arts";				
+		abOutput += "Unarmored Defense, Martial Arts";				
 		if (level > 1) {
 			ki=level;
 			abOutput += ", Ki (" + ki + " points), Unarmored Movement (+";				
@@ -2455,9 +2954,11 @@ switch (cl) {
 			}
 		if (level > 2) {
 			abOutput += ", Deflect Missiles, Monastic Tradition (";				
-			
-
 			x=Math.floor(Math.random() * 3); 	
+
+			if (forceMonk > -1) {
+				x=forceMonk;
+			} 
 			
 			switch (x) {
 				case 0:
@@ -2466,10 +2967,10 @@ switch (cl) {
 
 					break;
 				case 1:
-					abOutput += "Way of the Shadow), Shadow Arts";
+					abOutput += "Way of Shadow), Shadow Arts";
 					myCantrips.unshift("Minor Illusion");						
 			
-					classtxt += " (Way of the Shadow)";
+					classtxt += " (Way of Shadow)";
 					break;
 				case 2:
 					abOutput += "Way of the Four Elements), Disciple of the Elements (Elemental Attunement";
@@ -2547,7 +3048,7 @@ switch (cl) {
 		bg=8;
 		hd=10;
 		st=[4,5];
-		abOutput += ", Divine Sense, Lay on Hands ("  + (level * 5) + " hp)";
+		abOutput += "Divine Sense, Lay on Hands ("  + (level * 5) + " hp)";
 		if (level > 1){
 			
 			x=Math.floor(Math.random() * 4); 	
@@ -2577,6 +3078,14 @@ switch (cl) {
 		if (level > 2) {
 			abOutput += ", Divine Health, Sacred Oath (Oath of ";
 			x=Math.floor(Math.random() * 3); 	
+
+
+			if (forcePala > -1) {
+				x=forcePala;
+			} 
+			
+
+
 			switch (x) {
 				case 0:
 					abOutput +=  "Devotion), Sacred Weapon, Turn the Unholy";
@@ -2748,7 +3257,7 @@ switch (cl) {
 			}
 		}
 
-		abOutput += ", Favored Enemy ("+ favored +"), Natural Explorer (" + land + ")";				
+		abOutput += "Favored Enemy ("+ favored +"), Natural Explorer (" + land + ")";				
 		if (level > 1) {
 			x=Math.floor(Math.random() * 4); 	
 			switch (x) {
@@ -2772,8 +3281,12 @@ switch (cl) {
 			abOutput += ", Fighting Style (" + temp + "), Spellcasting";				
 		}
 		if (level  > 2) {
-
-			if (Math.random() < 0.5) {
+			x=Math.random();
+			if (forceRang > -1) {
+				x=forceRang;
+			} 
+			
+			if (x < 0.5) {
 				classtxt += " (Hunter)";
 				temp="Hunter),  ";
 				x=Math.floor(Math.random() * 3); 	
@@ -2866,13 +3379,18 @@ switch (cl) {
 			x=5;
 
 
-		abOutput += ", Expertise, Sneak Attack ("+ x + "d6), Thieves' Cant";				
+		abOutput += "Expertise, Sneak Attack ("+ x + "d6), Thieves' Cant";				
 		languageOutput += ", Thieves' Cant";
 		if (level > 1) {
 			abOutput += ", Cunning Action";				
 		}
 		if (level > 2) {
 			x=Math.floor(Math.random() * 2); 	
+			x=Math.random();
+			if (forceRogu > -1) {
+				x=forceRogu;
+			} 
+			
 			if (x==0) {
 				temp += "Thief), Fast Hands, Second-Story Work";
 				classtxt += " (Thief)";
@@ -2920,7 +3438,7 @@ switch (cl) {
 			x=5;
 
 
-		abOutput += ", Expertise, Sneak Attack ("+ x + "d6), Thieves' Cant";				
+		abOutput += "Expertise, Sneak Attack ("+ x + "d6), Thieves' Cant";				
 		languageOutput += ", Thieves' Cant";
 
 
@@ -2949,7 +3467,13 @@ switch (cl) {
 		bg=6;
 		hd=6;
 		st=[5,2];
+		abOutput += "Spellcasting";
 		soOrigin=Math.floor(Math.random() * 2);
+
+		if (forceSorc > -1) {
+			soOrigin=forceSorc;
+		} 
+		
 		switch (soOrigin) {
 			case 0:
 				classtxt += "Draconic Bloodline)";
@@ -2995,9 +3519,14 @@ switch (cl) {
 		bg=2;
 		st=[4,5];
 
-		abOutput += ", Otherworldly Patron (";
+		abOutput += "Otherworldly Patron (";
 
 		waPatron=Math.floor(Math.random() * 3);
+		
+		if (forceWarl > -1) {
+			waPatron=forceWarl;
+		} 
+			
 		switch (waPatron) {
 			case 0:
 				classtxt += "Archfey";
@@ -3111,7 +3640,10 @@ switch (cl) {
 		if (level > 2) {
 			tempTxt += ", Pact Boon (Pact of the ";				
 			x=Math.floor(Math.random() * 3);
-
+			if (forceWarlPact > -1) {
+				x=forceWarlPact;
+			} 
+			
 			switch (x) {
 				case 0:
 					classtxt += ", Chain Pact";
@@ -3236,11 +3768,20 @@ switch (cl) {
 		hd=6;
 		bg=10;
 		st=[3,4];
-		abOutput += ", Spellcasting, Arcane Recovery";
+		abOutput += "Spellcasting, Arcane Recovery";
 
 		if (level > 1) {
 			var schools = ["Abjuration","Conjuration","Divination","Enchantment","Evocation","Illusion","Necromancy","Transmutation"]
 			var wiSchool = Math.floor((Math.random() * schools.length));
+
+			//alert(document.getElementById("selClass").value +"/"+forceSchool )
+			if ((forceSchool > -1) && (document.getElementById("selClass").value == 15)) {
+
+				wiSchool = forceSchool;
+			}
+
+
+
 			classtxt += " (" + schools[wiSchool] + " school)";
 			abOutput += ", Arcane Tradition (" + schools[wiSchool] +" school)"
 			switch(wiSchool) {
@@ -3327,24 +3868,25 @@ switch (cl) {
 
 
 //assign abilities
-abil[ab1] += abilRaw.shift();
-abil[ab2] += abilRaw.shift();
-// if char has a 3rd preference for high ability
-if (ab3 > -1)  
-	abil[ab3] += abilRaw.shift();
-// give good score to CON
-if (abil[2] < 3)
-	abil[2] += abilRaw.shift();
-// randomly assign the rest of the numbers
-while (abilRaw.length > 0) {
-	x = Math.floor((Math.random() * 6)); 
-	// if a number isn't assigned already then assign one!
-	if (abil[x] < 3) {
-		abil[x] += abilRaw.shift();
-		}
-}
+if (document.getElementById("genMethod").value != "3") {
+	abil[ab1] += abilRaw.shift();
+	abil[ab2] += abilRaw.shift();
+	// if char has a 3rd preference for high ability
+	if (ab3 > -1)  
+		abil[ab3] += abilRaw.shift();
+	// give good score to CON
+	if (abil[2] < 3)
+		abil[2] += abilRaw.shift();
+	// randomly assign the rest of the numbers
+	while (abilRaw.length > 0) {
+		x = Math.floor((Math.random() * 6)); 
+		// if a number isn't assigned already then assign one!
+		if (abil[x] < 3) {
+			abil[x] += abilRaw.shift();
+			}
+	}
 
-//alert ("level" + level + " " +racetxt + " " + cl + " " );
+}
 
 
 console.log("1st level abilities before any increases:");
@@ -3658,6 +4200,7 @@ switch (bg) {
 		mySkills.push(14);
 		moreLang += 2;
 		bgOutput += "Acolyte";
+		myLifestyle = 3;
 		bgOutput += "</b>"
 		if (eqOutput.indexOf("Holy symbol") == -1) 
 			eqOutput += ", Holy symbol";
@@ -3751,7 +4294,7 @@ switch (bg) {
 		skLearn[4] = true;
 		mySkills.push(15);
 		mySkills.push(4);
-
+		myLifestyle = 4;
 		bgOutput += "Charlatan ";
 		bgOutput += "</b>"
 		x=Math.floor(Math.random() * 6);
@@ -3853,7 +4396,7 @@ switch (bg) {
 		skLearn[16] = true;
 		mySkills.push(4);
 		mySkills.push(16);
-
+		myLifestyle = 2;
 		eqOutput += ", Crowbar, Dark common clothes";
 		tempTxt = gaming[Math.floor(Math.random() * gaming.length)];
 		toOutput += ", Thieves' tools, " + tempTxt;
@@ -3956,7 +4499,7 @@ switch (bg) {
 		skLearn[12] = true;
 		mySkills.push(0);
 		mySkills.push(12);
-
+		myLifestyle = 3;
 		temp = music[Math.floor(Math.random() * music.length)];
 
 		while (myMusic.indexOf(temp) > -1) {
@@ -4047,7 +4590,7 @@ switch (bg) {
 		skLearn[13] = true;
 		mySkills.push(6);
 		mySkills.push(13);
-
+		myLifestyle = 4;
 		temp = artisans[Math.floor(Math.random() * artisans.length)];
 		
 		//check if we already know that skill.  if we do, don't add to our tool proficiencies
@@ -4149,7 +4692,7 @@ switch (bg) {
 		skLearn[14] = true;
 		mySkills.push(9);
 		mySkills.push(14);
-
+		myLifestyle = 2;
 		if (toOutput.indexOf("Herbalism kit") == -1) 
 			toOutput += ", Herbalism kit";
 
@@ -4262,6 +4805,7 @@ switch (bg) {
 		skLearn[17] = true;
 		mySkills.push(1);
 		mySkills.push(17);
+		myLifestyle = 3;
 		temp = artisans[Math.floor(Math.random() * artisans.length)];
 		toOutput += ", " + temp+ "'s tools, Land vehicles";
 		eqOutput += ", " + temp+ "'s tools, Common clothes";
@@ -4373,7 +4917,7 @@ switch (bg) {
 		skLearn[13] = true;
 		mySkills.push(5);
 		mySkills.push(13);
-
+		myLifestyle = 5;
 		tempTxt = gaming[Math.floor(Math.random() * gaming.length)];
 		toOutput += ", " + tempTxt;
 		eqOutput += ", Fine clothes, Signet ring, Scroll of pedigree";
@@ -4466,7 +5010,7 @@ switch (bg) {
 		skLearn[17] = true;
 		mySkills.push(3);
 		mySkills.push(17);
-
+		myLifestyle = 2;
 		temp = music[Math.floor(Math.random() * music.length)];
 		while ((myMusic.indexOf(temp)) > -1) {
 				temp = music[Math.floor(Math.random() * music.length)];
@@ -4582,7 +5126,7 @@ switch (bg) {
 		skLearn[5] = true;
 		mySkills.push(2);
 		mySkills.push(5);
-		
+		myLifestyle = 3;
 		eqOutput += ", Black ink, Quill, Colleague's letter, Common clothes";
 		moreLang += 2;
 		gold += 10;
@@ -4691,7 +5235,7 @@ switch (bg) {
 		skLearn[11] = true;
 		mySkills.push(3);
 		mySkills.push(11);
-		
+		myLifestyle = 3;		
 		toOutput += ", Navigator's tools, Water vehicles";
 		eqOutput += ", 50 feet silk rope, Lucky charm, Trinket, Common clothes";
 		gold += 10;
@@ -4778,7 +5322,7 @@ switch (bg) {
 		skLearn[7] = true;
 		mySkills.push(3);
 		mySkills.push(7);
-
+		myLifestyle = 3;
 		tempTxt = gaming[Math.floor(Math.random() * gaming.length)];
 		toOutput += ", " + tempTxt +", Land vehicles";
 		eqOutput += ", Insignia of rank, War trophy, Bone dice, Common clothes";
@@ -4886,7 +5430,7 @@ switch (bg) {
 		skLearn[16] = true;
 		mySkills.push(15);
 		mySkills.push(16);
-
+		myLifestyle = 3;
 		toOutput += ",  Disguise kit,  Thieves' tools";
 		eqOutput += ", Token, Common clothes";
 		gold += 10;
@@ -4972,6 +5516,10 @@ switch (bg) {
 }
 
 bgOutput += bgText;
+
+//Adventurer's League chars have a trinket
+if (al==true)
+	eqOutput += ", Trinket";
 
 
 //set true to all the skills we learned
@@ -5664,6 +6212,23 @@ if (cl==3) {
 			tempAr = drCantrip;
 			if (Math.random() < 0.66)
 				tempAr=["Druidcraft","Guidance","Poison Spray","Resistance","Shillelagh","Thorn Whip"];
+			temp = tempAr[Math.floor(Math.random() * tempAr.length)];
+	// check if we already know spell
+
+			if ((myCantrips.indexOf(temp) == -1) && (raceSpells.indexOf(temp) == -1)) {	
+		
+				myCantrips.push(temp);				
+				x--;
+			}		
+		}
+	}
+
+
+	//1 necro cantrip for death cleric
+	if (clDomain == 7)  {
+			x=1;
+		while (x > 0) {
+			tempAr=["Chill Touch","Chill Touch","Spare the Dying"];
 			temp = tempAr[Math.floor(Math.random() * tempAr.length)];
 	// check if we already know spell
 
@@ -6838,7 +7403,7 @@ if (cl==13) {
 	while (x > 0) {
 		tempAr = so1;
 		if (Math.random() < 0.66)
-			tempAr=["Burning Hands","Charm Person","Chromatic Orb","Color Spray","False Life","Mage Armor","Ray of Sickness","Shield","Sleep","Thunderwave","Witch Bolt"];
+			tempAr=["Burning Hands","Charm Person","Chromatic Orb","Color Spray","False Life","Mage Armor","Magic Missile","Ray of Sickness","Shield","Sleep","Thunderwave","Witch Bolt"];
 
 
 		temp = tempAr[Math.floor(Math.random() * tempAr.length)];
@@ -7456,13 +8021,15 @@ if (cl==15) {
 
 //1st level
 	x=sp1;
-
 	while (x > 0) {
 		tempAr=wi1;
-		
 		if (Math.random() < 0.66)
 			tempAr= ["Burning Hands","Chromatic Orb","Color Spray","False Life","Mage Armor","Magic Missile","Ray of Sickness","Shield","Sleep","Tasha's Hideous Laughter","Thunderwave","Witch Bolt"];
 
+		//this seems to give a 2nd lvl wizard a familiar around 30-50% of the time		
+		if (Math.random() < 0.4) 
+			tempAr.push("Find Familiar");
+	
 		temp = tempAr[Math.floor(Math.random() * tempAr.length)];
 // check if we already know spell
 		if (tempSpells.indexOf(temp) > -1) {
@@ -8705,13 +9272,16 @@ switch (cl) {
 
 		if (level > 1) {
 			if (z==1) {
-				//rapier for high dex, otherwise random 1 handed martial weapon
+				//finesse weapon for high dex, otherwise random 1 handed martial weapon
 				if (mod[1] < mod[0]) {
 					x = pickWeap([11,14,15,19]);
 					myWp.push(weapons[x]);
 					}
-				else 
-					myWp.push(weapons[16]);
+				else {
+					x = pickWeap([16,16,17,18]);
+					myWp.push(weapons[x]);
+				
+				}
 			//backup weapon
 			x = pickWeap([14,2,11]);
 			while (myWp.indexOf(weapons[x]) != -1) {
@@ -8720,11 +9290,14 @@ switch (cl) {
 			myWp.push(weapons[x]);
 
 			}
-		} else {
-			x = pickWeap([2,3,1]);
+		} else if (mod[1] < mod[0]) {
+			x = pickWeap([16,16,17,18]);
+			myWp.push(weapons[x]);
+
+		} else if (z!=2) {
+			x = pickWeap([16,17,18]);
 			myWp.push(weapons[x]);
 		}
-
 
 		if (z==2) {
 			x = pickWeap([17,18]);
@@ -9009,6 +9582,14 @@ if (cl != 8)
 
 gold += sum;
 
+if (al==true) {
+	gold=(x*40);
+	if (cl==8) {
+		gold=20;
+	}
+}
+
+
 var golddebug = [];
 golddebug.unshift(gold);
 
@@ -9031,6 +9612,8 @@ gold = Math.floor(gold);
 golddebug.push(gold);
 x--;
 }
+
+// convert some gp to pp for ease of carrying
 if ((upgrade() == true) && (gold > 250)) {
 	x = (Math.floor(Math.random() * 3) +7) * .1
 	platinum = Math.floor((gold * x) / 10);
@@ -9211,16 +9794,27 @@ if (level > 1) {
 		if (upgradeUncommon() == true) {
 			eqOutput += ", Magnifying Glass";	
 		}
+		
 
-		if (classtxt.indexOf("ssassin") > -1) {
-			if (upgradeUncommon() == true) {
-				x=Math.floor(Math.random() * 3) + 2;
-				eqOutput += ", " + x + " Vials of Basic Poison";
-			} else if (upgrade() == true) {
-				eqOutput += ", Vial of Basic Poison";
-			} 
-		} else if (upgradeUncommon() == true) {
-				eqOutput += ", Vial of Basic Poison";
+		//rogues might get 1 poison
+		if ((upgradeUncommon() == true) && (classtxt.indexOf("ssassin") == -1)) {
+
+				y=Math.floor(Math.random() * 20);
+				if ((y==0) && (upgradeVeryRare() == true)) {
+					z = Math.floor(Math.random() * poisonVeryRare.length);
+					eqOutput += ", Poison: " + poisonVeryRare[z];
+					
+				} else if ((y<5) && (upgradeRare() == true)) {
+					z = Math.floor(Math.random() * poisonRare.length);
+					eqOutput += ", Poison: " + poisonRare[z];
+					
+				} else if (upgradeUncommon() == true) { 
+					z = Math.floor(Math.random() * poisonUncommon.length);
+					eqOutput += ", Poison: " + poisonUncommon[z];
+				} else {
+					eqOutput += ", Vial of Basic Poison";
+				}
+				
 		}
 	} else {
 		if (upgradeRare() == true) {
@@ -9239,6 +9833,62 @@ if (level > 1) {
 		if ((upgrade() == true) && (eqOutput.indexOf("Disguise") == -1)) {
 			eqOutput += ", Disguise Kit";	
 		}
+		//many assassins will have 1-3 poisons
+		bool=false;
+		if (upgrade() == true) {
+			bool=true;
+			//poOutput += ", Vial of Basic Poison";
+		} 
+
+		if (upgradeUncommon() == true) {
+			xx=0;
+			xx=Math.floor(Math.random() * 3) + 1;
+			poOutput += "<br><b>Poison";
+			if ((xx>1) || (bool=true))
+				poOutput += "s";
+			poOutput +=  ":</b> "
+
+			if (bool==true) 
+				poOutput += "Basic poison, 	";
+
+			first=true;
+			while (xx > 0) {
+
+				y=Math.floor(Math.random() * 20);
+				if ((y==0) && (upgradeVeryRare() == true)) {
+					z = Math.floor(Math.random() * poisonVeryRare.length);
+					if (first == false) {
+						poOutput += ", "
+					}
+					poOutput += poisonVeryRare[z];
+					xx--;
+					first=false;
+				} else if ((y<5) && (upgradeRare() == true)) {
+					z = Math.floor(Math.random() * poisonRare.length);
+
+					if (first == false) {
+						poOutput += ", "
+					}
+
+
+					poOutput +=  poisonRare[z];
+					xx--;
+					first=false;
+				} else if (upgradeUncommon() == true) { 
+					z = Math.floor(Math.random() * poisonUncommon.length);
+					if (first == false) {
+						poOutput += ", "
+					}
+
+					poOutput +=  poisonUncommon[z];
+					xx--;
+					first=false;
+				}
+
+			}
+		} 
+
+
 	}
 
 	
@@ -9266,78 +9916,120 @@ if (level > 1) {
 			maOutput += ", Potion of Healing";			
 		}
 	}
-	
 
-/*
-	if (classtxt.indexOf("Ranger") > -1) {
+	eqOutput = eqOutput + poOutput;	
 
-	} else {
 
-	}
-
-*/
 
 
 //CHECK MAGICK ITEMS
-	if (upgradeUncommon() == true) {
+	if (upgrade() == true) {
 //	if (true == true) {
 		//determine number of magic items
-		xx=Math.floor(Math.random() * 20) + (level * 2);
+		
+
+		//usually 1 magic item level 5, 2 magic items level 10.  sometimes 3 magic items.
 		z=0;
 
-		if (xx > 32) {
-			z=3;
-		} else if (xx > 23) {
-			z=2;
-		} else {
-			z=1;
+		//1st item
+		//2nd level = 38%, 3rd level = 57%, 5th leve = 95%, 
+		xx=(level * 20)/100;
+
+		if (level < 7)
+			xx=96;
+
+		if (level > 6)
+			xx=99;
+
+		console.log("* / * / * / * / Level " +level + " guy has a "+xx+" chance of getting the first  magic item")
+
+
+		if (Math.random() < xx)
+			z++;
+
+		//2nd item
+		if (level < 5)
+			xx=0;
+		if (level ==5)
+			xx=5;
+		if (level > 5) 
+			xx=((level-5) * 20) /100;
+		if (level > 7)
+			xx=(((level-8) * 13) + 70) / 100;
+
+
+		console.log("* / * / * / * / Level " +level + " guy has a "+xx+" chance of getting the second magic item")
+
+		if (Math.random() < xx) {
+			
+			z++;
 		}
-		x=Math.floor(Math.random() * 5);
-		x = x - (Math.floor(xx/10));
-		
-		if (x < 0)
-			x=0;
+
+		//very rare bonus item
+		if ((upgradeVeryRare() == true) && (level > 6))
+			z++;
+
+		//alert(level+"level gives  items ="+z)
+
+		console.log("* / * / * / * / Your character has "+z+" magic item(s)")
+
 
 		while (z > 0) { 
+			x=Math.floor(Math.random() * 20);
 
-			//if it's our first time rolling then go with the bonus 1st roll done previously
-			if (xx==0) {
-				x=Math.floor(Math.random() * 5);	
-			} else {
-				xx=0;
-			}
-			
-//			x=4;
-			
-			//rare item
+			//5% very rare
 			if (x==0) {
-				if (upgradeRare() == true) {
-					y = Math.floor(Math.random() * 3);
-					if (y == 0) {
-						maOutput += ", Wand of Magic Missiles (7 charges)";
-						z--;
+				y = Math.floor(Math.random() * magicVeryRare.length);
+				maOutput += ", " + magicVeryRare[y];
+				z=z-0.6;
+
+			//20% rare
+			} else if (x < 5) {
+				//25% chance the rare item is magic armor.  
+				if ((Math.random() < 0.25) && (magicArmor==0) && (myAr.length > 0)) {
+
+					q=Math.floor(Math.random() * myAr.length);
+					if (upgradeVeryRare() == true) {
+						// +2
+						magicArmor=2;
+					} else {
+						// +1
+						magicArmor=1; 	
 					}
-					if (y == 1) {
-						maOutput += ", Wand of Magic Detection";
-						z--;
+					maOutput += ", +" + magicArmor +" "+ myAr[q];
+					if (upgradeVeryRare() == true) {
+						i = Math.floor(Math.random() * 10);
+						maOutput += " (Resistant to " + ringResistance[i] + " damage)";	
 					}
-					if ((y==2) && (maOutput.indexOf("Ring of Protection") == -1)) {
+					whichMagicArmor = q;
+					z--;
+
+				//it's not magic armor
+				} else {
+					y = Math.floor(Math.random() * magicRare.length);
+					
+					if ((magicRare[y] == "Ring of Resistance") && (maOutput.indexOf("Ring of Resistance") == -1)) {
+						i = Math.floor(Math.random() * 10);
+						maOutput += ", "+ ringStone[i] +" Ring of Resistance (" + ringResistance[i] + " damage)";
+						z--;
+					} else if ((magicRare[y] == "Ring of Protection") && (maOutput.indexOf("Ring of Protection") == -1)) {
 						ringProtection = 1;
 						if (upgradeVeryRare() == true)
 							ringProtection = 2;
-							maOutput += ", +"+ringProtection+" Ring of Protection";
+						maOutput += ", +"+ringProtection+" Ring of Protection";
+						z--;
+					} else if ((magicRare[y] == "Ring of Evasion (3 charges)") && (maOutput.indexOf("Ring of Evasion") == -1)) {
+						maOutput += ", " + magicRare[y];
 						z--;
 					}
 
+					
 				}
-			}
 
-
-	
-			//weapon
-			if (x==1) {
-				//if ((true == true) && (magicWeapon==0)) {
-				if ((upgradeUncommon() == true) && (magicWeapon==0)) {
+			//75% uncommon
+			} else {
+				//20% chance it's a magic weapon
+				if ((Math.random() < 0.20) && (magicWeapon==0)) {
 					bool=false;
 					var count =0;
 					while (bool==false) {
@@ -9372,112 +10064,150 @@ if (level > 1) {
 							}
 						} 
 					}
+				//20% chance scroll
+				} else if (Math.random() < 0.2) {
 
-				}
-			}
-			
-
-
-			//armor
-			if (x==2) {
-				// if you have armor and it's not magical
-				if ((upgradeUncommon() == true) && (magicArmor==0) && (myAr.length > 0)) {
+					xx = Math.floor(Math.random() * 20)
+					y=0;
+					if (xx==0) {
+						y=2;
+					} else if (xx < 4) {
+						y=1;
+					}
 					
-					q=Math.floor(Math.random() * myAr.length);
-					if (upgradeVeryRare() == true) {
-						// +2
-						magicArmor=2;
-					} else {
-						// +1
-						magicArmor=1; 	
-					}
-					maOutput += ", +" + magicArmor +" "+ myAr[q];
-					if (upgradeVeryRare() == true) {
-						i = Math.floor(Math.random() * 10);
-						maOutput += " (with Resistance to " + ringResistance[i] + " damage)";	
-					}
-					whichMagicArmor = q;
-					z--;
-				}
-			}
+					if (cl==2) {
+						if (y==0)
+							maOutput += ", Scroll of " + scrollBardUnc[Math.floor(Math.random() * scrollBardUnc.length)];
+						else if (y==1)
+							maOutput += ", Scroll of " + scrollBardRare[Math.floor(Math.random() * scrollBardRare.length)];
+						else if (y==2)
+							maOutput += ", Scroll of " + scrollBardVery[Math.floor(Math.random() * scrollBardVery.length)];				
+						z=z-0.6;
+					} else if (cl==3) {
+						if (y==0)
+							maOutput += ", Scroll of " + scrollClerUnc[Math.floor(Math.random() * scrollClerUnc.length)];
+						else if (y==1)
+							maOutput += ", Scroll of " + scrollClerRare[Math.floor(Math.random() * scrollClerRare.length)];
+						else if (y==2)
+							maOutput += ", Scroll of " + scrollClerVery[Math.floor(Math.random() * scrollClerVery.length)];				
+						z=z-0.6;
+					} else if (cl==4) {
+						if (y==0)
+							maOutput += ", Scroll of " + scrollDruiUnc[Math.floor(Math.random() * scrollDruiUnc.length)];
+						else if (y==1)
+							maOutput += ", Scroll of " + scrollDruiRare[Math.floor(Math.random() * scrollDruiRare.length)];
+						else if (y==2)
+							maOutput += ", Scroll of " + scrollDruiVery[Math.floor(Math.random() * scrollDruiVery.length)];				
 
+						z=z-0.6;
+					} else if (cl==9) {
+						if (y==0)
+							maOutput += ", Scroll of " + scrollPalaUnc[Math.floor(Math.random() * scrollPalaUnc.length)];
+						else if (y==1)
+							maOutput += ", Scroll of " + scrollPalaRare[Math.floor(Math.random() * scrollPalaRare.length)];
+						else if (y==2)
+							maOutput += ", Scroll of " + scrollPalaVery[Math.floor(Math.random() * scrollPalaVery.length)];				
 
+						z=z-0.6;
+					} else if (cl==10) {
+						if (y==0)
+							maOutput += ", Scroll of " + scrollRangUnc[Math.floor(Math.random() * scrollRangUnc.length)];
+						else if (y==1)
+							maOutput += ", Scroll of " + scrollRangRare[Math.floor(Math.random() * scrollRangRare.length)];
+						else if (y==2)
+							maOutput += ", Scroll of " + scrollRangVery[Math.floor(Math.random() * scrollRangVery.length)];				
 
-			//less rare item
-			if (x==3) {
-				if (upgradeUncommon() == true) {
-					y = Math.floor(Math.random() * 4);
-					if (y == 0) {
-						maOutput += ", Bag of Holding";
-						z--;
-					} 
-					if (y==2) {
-						maOutput += ", Gloves of Swimming and Climbing";
-						z--;
-					}
-					if (y==3) {
-						maOutput += ", Ring of Evasion";
-						z--;
-					}
-					if (y==4) {
-						maOutput += ", Goggles of Night";
-						z--;
+						z=z-0.6;
+					} else if (cl==14) {
+						if (y==0)
+							maOutput += ", Scroll of " + scrollWarlUnc[Math.floor(Math.random() * scrollWarlUnc.length)];
+						else if (y==1)
+							maOutput += ", Scroll of " + scrollWarlRare[Math.floor(Math.random() * scrollWarlRare.length)];
+						else if (y==2)
+							maOutput += ", Scroll of " + scrollWarlVery[Math.floor(Math.random() * scrollWarlVery.length)];				
+
+						z=z-0.6;
+					} else if ((cl==5) || (cl==12) || (cl==13) || (cl==15)) {
+						//fighters and rogues can't cast high level spells
+						if ((y==0) || (cl==5) || (cl==12))
+							maOutput += ", Scroll of " + scrollWizaUnc[Math.floor(Math.random() * scrollWizaUnc.length)];
+						else if (y==1)
+							maOutput += ", Scroll of " + scrollWizaRare[Math.floor(Math.random() * scrollWizaRare.length)];
+						else if (y==2)
+							maOutput += ", Scroll of " + scrollWizaVery[Math.floor(Math.random() * scrollWizaVery.length)];				
+
+						z=z-0.6;
 					}
 
+					// 20% chance magic arrows 
+				}  else if ((Math.random() < 0.2) && (magicArrows<1)) {
+					bool=false;
+					
+					for (x=0;x < myWp.length;x++) {
+					
+						i = weapons.indexOf(myWp[x]);
+						if ((i == 5) || (i == 6) || (i == 7)) {
+							bool=true;
 						
-				} 
-			}
-
-			//not so rare
-			if (x==4) {
-				if (upgradeUncommon() == true) { 
-					y = Math.floor(Math.random() * 5);
+							rangedWeapons.push(i);
+						} else if ((i == 8) || (i == 9)) {
+							bool=true;
+						
+							rangedWeapons.push(i);
+						} else if (i == 24) {
+							bool=true;
+						
+							rangedWeapons.push(i);
+						}
 					
-					if (y == 0) {
-						maOutput += ", Potion of Flying";
-						z--;
-					} 
-					if (y == 1) {
-						maOutput += ", Potion of Greater Healing";
-						z--;
-					} 
+					}
+					if (bool==true) {
+						//randomly pick one of their ranged weapons and give magic ammo for it
+						i=rangedWeapons[Math.floor(Math.random() * rangedWeapons.length)];
+						if ((i == 5) || (i == 6) || (i == 7)) {
+							magicArrowType="Crossbow bolts";
+						} else if ((i == 8) || (i == 9)) {
+							magicArrowType="Arrows";
+						} else if (i == 24) {
+							magicArrowType="Sling bullets";
+						}
 
-					if (y == 2) {
-						maOutput += ", Potion of Invisibility";
+						if (upgradeRare() == true) {
+							magicArrowPlus=3;
+							magicArrows=(Math.floor(Math.random() * 8) +3);
+						} else if (upgradeUncommon() == true) {
+							magicArrowPlus=2;
+							magicArrows=(Math.floor(Math.random() * 6) +2) + (Math.floor(Math.random() * 6) +2);
+						} else {
+							magicArrowPlus=1;
+							magicArrows=(Math.floor(Math.random() * 6) +1) + (Math.floor(Math.random() * 6) +1) + (Math.floor(Math.random() * 6) +1) + 3;
+						}
 						z--;
+						maOutput += ", +" + magicArrowPlus +" " + magicArrowType +" ("+ magicArrows+ ")";
 					}
 
-					if (y == 3) {
-						maOutput += ", Potion of Vitality";
-						z--;
-					}
-					if (y == 4) {
-						i = Math.floor(Math.random() * 10);
-						maOutput += ", "+ ringStone[i] +" Ring of Resistance (" + ringResistance[i] + " damage)";
-						z--;
-					}
-				}
-			}
-/*
-			if (x==4) { 
-				if (upgrade() == true) {
-					i = Math.floor(Math.random() * scrollSpells.length);
-					tempAr = scrollSpellCasters[i];
-					for (i=0;i<tempAr.length;i++) {
-						tempAr[i] = tempAr[i] * 1;
-					}
-					maOutput += ", " + scrollSpells[i] + " Spell Scroll";
-					if ((tempAr.indexOf(cl) == -1) || (level < scrollSpellCastLvl[i])) {
-						 maOutput += " (DC " + (10+ scrollSpellLevels[i]) + " arcana check to cast)";
-					} else    {
-						maOutput += " (Cast at will)"
-					}
-					z--;
 
 				}
+				else {
+					// it's not a magic weapon
+					y = Math.floor(Math.random() * magicUncommon.length);
+
+					maOutput += ", " + magicUncommon[y];
+					if (magicUncommon[y] == "Keoghtom's Ointment") {
+						maOutput += " ("+ (Math.floor(Math.random() * 4) +2)   +" doses)"
+						z--;
+					} else 	if ((magicUncommon[y] == "Boots of Striding and Springing") && (maOutput.indexOf("Striding and Springing") == -1)) {
+						bootsOfSS = true;
+						z--;
+					} else {
+						z--;
+					}
+
+
+
+				}
+
 			}
-			
-*/
 
 		}
 	}
@@ -9517,7 +10247,6 @@ if (familiar.length > 0)
 if ((familiar.length == 0) && ((mySpells.indexOf("Find Familiar") > -1) || (waTomeRituals.indexOf("Find Familiar") > -1))) {
 	x=Math.floor(Math.random() * familiars.length);
 	spOutput += "<br><b>Familiar:</b> " + familiars[x];
-
 	
 }
 
@@ -9544,7 +10273,7 @@ for (x=0;x < myWp.length;x++) {
 			temp=1;
 			}
 
-		wpOutput += "<LI>"
+		wpOutput += "<li>"
 		tempTxt ="";
 		y=0;
 		// show the plus if it's magic
@@ -9617,19 +10346,35 @@ for (x=0;x < myWp.length;x++) {
 				wrOutput += " &nbsp; 40 bolts";
 			else 
 				wrOutput += " &nbsp; 20 bolts";
+			if (((magicArrowPlus > 0) && (magicArrowType.indexOf("olt") > -1)) && (magicArrowDisplay==false)) {
+				wrOutput += "</li><li>+" + magicArrowPlus + " " + magicArrowType +" (" + magicArrows + ") (" + showPlus( y+z+prof+q+magicArrowPlus ) +  " to hit) "+tempTxt+ showPlus( y+q+magicArrowPlus ) + " " + wpType[i] + " damage";
+				magicArrowDisplay=true;
 			}
+
+
+		}
+
 		if ((i == 8) || (i == 9)) {
 			if ((fiStyle==0) || (cl==10)) 
 				wrOutput += " &nbsp; 40 arrows";
 			else 
 				wrOutput += " &nbsp; 20 arrows";
-
+			
+			if ((magicArrowPlus > 0) && (magicArrowType.indexOf("rrow") > -1) && (magicArrowDisplay==false)) {
+				wrOutput += "</li><li>+" + magicArrowPlus + " " + magicArrowType +" (" + magicArrows + ") (" + showPlus( y+z+prof+q+magicArrowPlus ) +  " to hit) "+tempTxt+ showPlus( y+q+magicArrowPlus ) + " " + wpType[i] + " damage";
+				magicArrowDisplay=true;
 			}
+		}
 		if (i == 24) {
 			wrOutput += " &nbsp; 20 bullets";
+			if ((magicArrowPlus > 0) && (magicArrowType.indexOf("ullet") > -1) && (magicArrowDisplay==false)) {
+				wrOutput += "</li><li>+" + magicArrowPlus + " " + magicArrowType +" (" + magicArrows + ") (" + showPlus( y+z+prof+q+magicArrowPlus ) +  " to hit) "+tempTxt+ showPlus( y+q+magicArrowPlus ) + " " + wpType[i] + " damage";
+				magicArrowDisplay=true;
 			}
 
-		wrOutput += "<br>";
+		}
+
+		
 	}
 }
 if (wrOutput.length >0)
@@ -9785,10 +10530,30 @@ if (toOutput != "") {
 	if (toOutput.charAt(0)==",") 
 		toOutput = toOutput.slice(1,toOutput.length);
 
-	abOutput =  "<b>Languages:</b>  <span id=\"la\"></span> &nbsp; &nbsp; <b>Other proficiencies:</b>" + toOutput + "<br><b>Abilities:</b> "+  abOutput;
+	abOutput =  "<b>Languages:</b>  <span id=\"la\"></span> &nbsp; &nbsp; <b>Other proficiencies:</b>" + toOutput + "<br>" + abOutput;
 } else {
-	abOutput =  "<b>Languages:</b>  <span id=\"la\"></span><br><b>Abilities:</b> " +abOutput;
+	abOutput =  "<b>Languages:</b>  <span id=\"la\"></span><br>"+ abOutput;
 }
+
+//FACTION
+//small  chance it's random.  else it's based on class.
+x=Math.floor(Math.random() * 4);
+if (x==0) {
+	myFaction = Math.floor(Math.random() * 5)
+} else {
+	if ((cl==2) || (cl==15))
+		myFaction=0;
+	if ((cl==3) || (cl==8) || (cl==9))
+		myFaction=1;
+	if ((cl==1) || (cl==4) || (cl==10))
+		myFaction=2;
+	if ((cl==13) || (cl==5) || (cl==6) || (cl==7))
+		myFaction=3;
+	if ((cl==14) || (cl==11) || (cl==12))
+		myFaction=4;
+}
+
+
 
 
 for (x=0;x<6;x++) {
@@ -9835,7 +10600,9 @@ if (abOutput.indexOf("Remarkable Athlete") > -1) {
 
 
 showAbil();
-
+if (al==true) {
+	output  +=   "<b>Faction:</b>  " + factions[myFaction] + " &nbsp; Lifestyle:  " + lifestyles[myLifestyle];
+}
 document.getElementById("status").innerHTML = output;
 document.getElementById("ro").innerHTML = rollOutput;
 document.getElementById("sk").innerHTML = skOutput;
