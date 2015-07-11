@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>Listo v1.02 - Quick Character Generator for 5th Edition D&D by Mike Risher</title>
+<title>Listo v1.03 - Quick Character Generator for 5th Edition D&D by Mike Risher</title>
 <meta charset="UTF-8">
 <meta name="author" content="Mike Risher">
-<meta name="description" content="Listo is a 5th Edition D&D Character Generator for level 1-10 Characters created by Mike Risher.  Listo version 1.02d was released on December 12th, 2014.">
+<meta name="description" content="Listo is a 5th Edition D&D Character Generator for level 1-10 Characters created by Mike Risher.  Listo version 1.03 was released in July, 2015.">
 <meta name="keywords" content="listo, DnD, D&D, Dungeons and Dragons, Character Generator, Character Maker, 5e, 5th edition, random">
 <link rel="icon" type="image/gif" href="http://i.imgur.com/6y35IBy.gif">
 
@@ -134,14 +134,21 @@ float: right;
 	</select>
 
 	<select id="selRace"><option value="0">Any Race</option>
+	<option value="21">Aarakocra</option>	
 	<option value="1">Dragonborn</option>
 	<option value="11">Dwarf (Hill)</option>
 	<option value="12">Dwarf (Mountain)</option>
 	<option value="6">Elf (Drow)</option>
 	<option value="14">Elf (High)</option>
 	<option value="15">Elf (Wood)</option>
+	<option value="23">Genasi (Air)</option>
+	<option value="24">Genasi (Earth)</option>
+	<option value="25">Genasi (Fire)</option>
+	<option value="26">Genasi (Water)</option>
 	<option value="2">Gnome (Forest)</option>
 	<option value="7">Gnome (Rock)</option>
+	<option value="22">Gnome (Svirfneblin)</option>
+	<option value="27">Goliath</option>
 	<option value="3">Half-Elf</option>
 	<option value="4">Half-Orc</option>
 	<option value="17">Halfling (Lightfoot)</option>
@@ -233,7 +240,7 @@ float: right;
 		</select>
 	</span>
 	<span id="monkOptions" class="classOptions">
-		<select id="selMonk"><option value="-1">Any Monastic Tradtion</option>
+		<select id="selMonk"><option value="-1">Any Monastic Tradition</option>
 		<option value="0">Way of the Open Hand</option>
 		<option value="1">Way of Shadow</option>
 		<option value="2">Way of the Four Elements</option>
@@ -480,6 +487,10 @@ function checkRun() {
 		if (document.getElementById("selLevel").selectedIndex != 0) {
 			alert("Sorry, but your Adventurer's League character must start at 1st level!");
 			document.getElementById("selLevel").selectedIndex = "0";	
+		}
+		if (document.getElementById("selRace").value == "21") {
+			alert("Sorry, but Aarakocra aren't allowed in Adventurer's League play.")
+			document.getElementById("selRace").selectedIndex = "0";	
 		}
 	}
 
@@ -866,52 +877,102 @@ var myFaction = -1;
 var lifestyles = ["Wretched","Squalid","Poor","Modest","Comfortable","Wealthy","Artistocratic"];
 var myLifestyle = -1;
 var skills = ["Acrobatics","Animal Handling","Arcana","Athletics","Deception","History","Insight","Intimidation","Investigation","Medicine","Nature","Perception","Perform","Persuasion","Religion","Sleight of Hand","Stealth","Survival"];
-var wiCantrip = ["Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
-//NOT ENOUGH FAMILIARS. therefore, 2 find familiar spells
-var wi1 = ["Alarm","Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Find Familiar","Find Familiar","Fog Cloud","Grease","Identify","Illusory Script","Jump","Longstrider","Mage Armor","Magic Missile","Protection from Good and Evil","Ray of Sickness","Shield","Silent Image","Sleep","Tasha's Hideous Laughter","Tenser's Floating Disk","Thunderwave","Unseen Servant","Witch Bolt"];
-var wi2 = ["Alter Self","Arcane Lock","Blindness/Deafness","Blur","Cloud of Daggers","Continual Flame","Crown of Madness","Darkness","Darkvision","Detect Thoughts","Enlarge/Reduce","Flaming Sphere","Gentle Repose","Gust of Wind","Hold Person","Invisibility","Knock","Levitate","Locate Object","Magic Mouth","Magic Weapon","Melf's Acid Arrow","Mirror Image","Misty Step","Nystul's Magic Aura","Phantasmal Force","Ray of Enfeeblement","Rope Trick","Scorching Ray","See Invisibility","Shatter","Spider Climb","Suggestion","Web"];
-var waCantrip = ["Blade Ward","Chill Touch","Eldritch Blast","Friends","Mage Hand","Minor Illusion","Poison Spray","Prestidigitation","True Strike"];
-var wa1 = ["Armor of Agathys","Arms of Hadar","Charm Person","Comprehend Languages","Expeditious Retreat","Hellish Rebuke","Hex","Illusory Script","Protection from Good and Evil","Unseen Servant","Witch Bolt"];
-var wa2 = ["Cloud of Daggers","Crown of Madness","Darkness","Enthrall","Hold Person","Invisibility","Mirror Image","Misty Step","Ray of Enfeeblement","Shatter","Spider Climb","Suggestion"];
-var tomeRituals = ["Illusory Script","Identify","Identify","Identify","Find Familiar","Detect Disease and Poison","Detect Magic","Detect Magic","Detect Magic","Comprehend Languages","Unseen Servant","Tenser's Floating Disk","Speak with Animals","Speak with Animals","Purify Food and Drink","Alarm","Alarm"];
+
 var patronSpells1=[];
 var patronSpells2=[];
 var patronSpells3=[];
 var patronSpells4=[];
 var patronSpells5=[];
-var soCantrip = ["Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
-var so1 = ["Burning Hands","Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Fog Cloud","Jump","Magic Missile","Magic Missile","Mage Armor","Ray of Sickness","Shield","Silent Image","Sleep","Thunderwave","Witch Bolt"];
-var so2 = ["Alter Self","Blindness/Deafness","Blur","Cloud of Daggers","Crown of Madness","Darkness","Darkvision","Detect Thoughts","Enhance Ability","Enlarge/Reduce","Gust of Wind","Hold Person","Invisibility","Knock","Levitate","Mirror Image","Misty Step","Phantasmal Force","Scorching Ray","See Invisibility","Shatter","Spider Climb","Suggestion","Web"];
-var ra1 = ["Alarm","Animal Friendship","Cure Wounds","Detect Magic","Detect Poison and Disease","Ensnaring Strike","Fog Cloud","Goodberry","Hail of Thorns","Hunter's Mark","Jump","Longstrider","Speak with Animals"];
 var pa1 = ["Bless","Command","Compelled Duel","Cure Wounds","Detect Evil and Good","Detect Magic","Detect Poison and Disease","Divine Favor","Heroism","Protection from Evil and Good","Purify Food and Drink","Searing Smite","Shield of Faith","Thunderous Smite","Wrathful Smite"];
-var drCantrip = ["Druidcraft","Guidance","Mending","Poison Spray","Produce Flame","Resistance","Shillelagh","Thorn Whip"];
-var dr1 = ["Animal Friendship","Charm Person","Create or Destroy Water","Cure Wounds","Detect Magic","Detect Poison and Disease","Entangle","Faerie Fire","Fog Cloud","Goodberry","Healing Word","Jump","Longstrider","Purify Food and Drink","Speak with Animals","Thunderwave"];
-var dr2 = ["Animal Messenger","Barkskin","Beast Sense", "Darkvision", "Enhance Ability", "Find Traps", "Flame Blade", "Flaming Sphere", "Gust of Wind", "Heat Metal", "Hold Person","Lesser Restoration","Locate Object", "Moonbeam", "Pass without Trace", "Protection from Poison","Spike Growth"];
+var pa2 = ["Aid","Branding Smite","Find Steed","Lesser Restoration","Locate Object","Magic Weapon","Protection from Poison","Zone of Truth"];
+
+var pa3 = ["Aura of Vitality","Blinding Smite","Create Food and Water","Crusader's Mantle","Daylight","Dispel Magic","Elemental Weapon"];
+var ra1 = ["Absorb Elements","Beast Bond","Alarm","Animal Friendship","Cure Wounds","Detect Magic","Detect Poison and Disease","Ensnaring Strike","Fog Cloud","Goodberry","Hail of Thorns","Hunter's Mark","Jump","Longstrider","Speak with Animals"];
+//var ra1 = ["Alarm","Animal Friendship","Cure Wounds","Detect Magic","Detect Poison and Disease","Ensnaring Strike","Fog Cloud","Goodberry","Hail of Thorns","Hunter's Mark","Jump","Longstrider","Speak with Animals"];
+var ra2 = ["Animal Messenger","Barkskin","Beast Sense","Cordon of Arrows","Darkvision","Find Traps","Lesser Restoration","Locate Animals or Plants","Locate Object","Pass without Trace","Protection from Poison","Silence","Spike Growth"];
+var ra3 = ["Flame Arrows","Conjure Animals","Conjure Barrage","Daylight","Lightning Arrow","Nondetection","Plant Growth","Protection from Energy","Speak with Plants","Water Breathing","Water Walk","Wind Wall"];
+//var ra3 = ["Conjure Animals","Conjure Barrage","Daylight","Lightning Arrow","Nondetection","Plant Growth","Protection from Energy","Speak with Plants","Water Breathing","Water Walk","Wind Wall"];
+
+
 var clCantrip = ["Guidance","Light","Mending","Resistance","Sacred Flame","Spare the Dying","Thaumaturgy"];
 var cl1 = ["Bane","Bless","Command","Create or Destroy Water","Cure Wounds","Detect Evil and Good","Detect Magic","Detect Poison and Disease","Guiding Bolt","Healing Word","Inflict Wounds","Protection from Evil and Good","Purify Food and Drink","Sanctuary","Shield of Faith"];
 var cl2 = ["Aid","Augury","Blindness/Deafness","Calm Emotions","Continual Flame","Enhance Ability","Find Traps","Gentle Repose","Hold Person","Lesser Restoration","Locate Object","Prayer of Healing","Protection from Poison","Silence","Spiritual Weapon","Warding Bond","Zone of Truth"];
-var baCantrip = ["Blade Ward","Dancing Lights","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Prestidigitation","True Strike","Vicious Mockery"];
-var ba1 = ["Animal Friendship","Bane","Charm Person","Comprehend Languages","Cure Wounds","Detect Magic","Disguise Self","Dissonant Whispers","Faerie Fire","Feather Fall","Healing Word","Heroism","Identify","Illusory Script","Longstrider","Silent Image","Sleep","Speak with Animals","Tasha's Hideous Laughter","Thunderwave","Unseen Servant"];
-var ba2 = ["Animal Messenger","Blindness/Deafness","Calm Emotions","Cloud of Daggers","Crown of Madness","Detect Thoughts","Enhance Ability","Enthrall","Heat Metal","Hold Person","Invisibility","Knock","Lesser Restoration","Locate Animals or Plants","Locate Object","Magic Mouth","Phantasmal Force","See Invisibility","Shatter","Silence","Suggestion","Zone of Truth"];
-var ba3 = ["Bestow Curse","Clairvoyance","Dispel Magic","Fear","Feign Death","Glyph of Warding","Hypnotic Pattern","Leomund’s Tiny Hut","Major Image","Nondetection","Plant Growth","Sending","Speak with Dead","Speak with Plants","Stinking Cloud","Tongues"];
+//var baCantrip = ["Blade Ward","Dancing Lights","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Prestidigitation","True Strike","Vicious Mockery"];
 var cl3 = ["Animate Dead","Beacon of Hope","Bestow Curse","Clairvoyance","Create Food and Water","Daylight","Dispel Magic","Feign Death","Glyph of Warding","Magic Circle","Mass Healing Word","Meld into Stone","Protection from Energy","Remove Curse","Revivify","Sending","Speak with Dead","Spirit Guardians","Tongues","Water Walk"];
-var dr3 = ["Call Lightning","Conjure Animals","Daylight","Dispel Magic","Feign Death","Meld into Stone","Plant Growth","Protection from Energy","Sleet Storm","Speak with Plants","Water Breathing","Water Walk","Wind Wall"];
-var so3 = ["Blink","Clairvoyance","Counterspell","Daylight","Dispel Magic","Fear","Fireball","Fly","Gaseous Form","Haste","Hypnotic Pattern","Lightning Bolt","Major Image","Protection from Energy","Sleet Storm","Slow","Stinking Cloud","Tongues","Water Breathing","Water Walk"];
-var wi3 = ["Animate Dead","Bestow Curse","Blink","Clairvoyance","Counterspell","Dispel Magic","Fear","Feign Death","Fireball","Fly","Gaseous Form","Glyph of Warding","Haste","Hypnotic Pattern","Leomund’s Tiny Hut","Lightning Bolt","Magic Circle","Major Image","Nondetection","Phantom Steed","Protection from Energy","Remove Curse","Sending","Sleet Storm","Slow","Stinking Cloud","Tongues","Vampiric Touch","Water Breathing"];
-var wi4 = ["Arcane Eye","Banishment","Blight","Confusion","Conjure Minor Elementals","Control Water","Dimension Door","Evard's Black Tentacles","Fabricate","Fire Shield","Greater Invisibility","Hallucinatory Terrain","Ice Storm","Leomund’s Secret Chest","Locate Creature","Mordenkainen’s Faithful Hound","Mordenkainen’s Private Sanctum","Otiluke’s Resilient Sphere","Phantasmal Killer","Polymorph","Stone Shape","Stoneskin","Wall of Fire"];
-var wi5 = ["Animate Objects","Bigby’s Hand","CloudkilI","Cone of Cold","Conjure Elemental","Contact Other Plane","Creation","Dominate Person","Dream","Geas","Hold Monster","Legend Lore","Mislead","Modify Memory","Passwall","Planar Binding","Rary’s Telepathic Bond","Scrying","Seeming","Telekinesis","Teleportation Circle","Wall of Force","Wall of Stone"];
-var so4 = ["Banishment","Blight","Confusion","Dimension Door","Dominate Beast","Greater Invisibility","Ice Storm","Polymorph","Stoneskin","Wall of Fire"];
-var so5 = ["Animate Objects","Cloudkill","Cone of Cold","Creation","Dominate Person","Hold Monster","Insect Plague","Seeming","Telekinesis","Teleportation Circle","Wall of Stone"];
-var wa4 = ["Banishment","Blight","Dimension Door","Hallucinatory Terrain"];
-var wa5 = ["Contact Other Plane","Dream","Hold Monster","Scrying"];
-var dr4 = ["Blight","Confusion","Conjure Minor Elementals","Conjure Woodland Beings","Control Water","Dominate Beast","Freedom of Movement","Giant Insect","Grasping Vine","Hallucinatory Terrain","Ice Storm","Locate Creature","Polymorph","Stone Shape","Stoneskin","Wall of Fire"];
-var dr5 = ["Antilife Shell","Awaken","Commune with Nature","Conjure Elemental","Contagion","Geas","Greater Restoration","Insect Plague","Mass Cure Wounds","Planar Binding","Reincarnate","Scrying","Tree Stride","Wall of Stone"];
 var cl4 = ["Banishment","Control Water","Death Ward","Divination","Freedom of Movement","Guardian of Faith","Locate Creature","Stone Shape"];
 var cl5 = ["Commune","Contagion","Dispel Evil and Good","Flame Strike","Geas","Greater Restoration","Hallow","Insect Plague","Legend Lore","Mass Cure Wounds","Planar Binding","Raise Dead","Scrying"];
+
+var baCantrip = ["Blade Ward","Dancing Lights","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Prestidigitation","Thunderclap","True Strike","Vicious Mockery"];
+var ba1 = ["Animal Friendship","Bane","Charm Person","Comprehend Languages","Cure Wounds","Detect Magic","Disguise Self","Dissonant Whispers","Earth Tremor","Faerie Fire","Feather Fall","Healing Word","Heroism","Identify","Illusory Script","Longstrider","Silent Image","Sleep","Speak with Animals","Tasha's Hideous Laughter","Thunderwave","Unseen Servant"];
+var ba2 = ["Animal Messenger","Blindness/Deafness","Calm Emotions","Cloud of Daggers","Crown of Madness","Detect Thoughts","Enhance Ability","Enthrall","Heat Metal","Hold Person","Invisibility","Knock","Lesser Restoration","Locate Animals or Plants","Locate Object","Magic Mouth","Phantasmal Force","Pyrotechnics","See Invisibility","Shatter","Silence","Skywrite","Suggestion","Warding Wind","Zone of Truth"];
+var ba3 = ["Bestow Curse","Clairvoyance","Dispel Magic","Fear","Feign Death","Glyph of Warding","Hypnotic Pattern","Leomund’s Tiny Hut","Major Image","Nondetection","Plant Growth","Sending","Speak with Dead","Speak with Plants","Stinking Cloud","Tongues"];
+//var ba1 = ["Animal Friendship","Bane","Charm Person","Comprehend Languages","Cure Wounds","Detect Magic","Disguise Self","Dissonant Whispers","Faerie Fire","Feather Fall","Healing Word","Heroism","Identify","Illusory Script","Longstrider","Silent Image","Sleep","Speak with Animals","Tasha's Hideous Laughter","Thunderwave","Unseen Servant"];
+//var ba2 = ["Animal Messenger","Blindness/Deafness","Calm Emotions","Cloud of Daggers","Crown of Madness","Detect Thoughts","Enhance Ability","Enthrall","Heat Metal","Hold Person","Invisibility","Knock","Lesser Restoration","Locate Animals or Plants","Locate Object","Magic Mouth","Phantasmal Force","See Invisibility","Shatter","Silence","Suggestion","Zone of Truth"];
 var ba4 = ["Compulsion","Confusion","Dimension Door","Freedom of Movement","Greater Invisibility","Hallucinatory Terrain","Locate Creature","Polymorph"];
 var ba5 = ["Animate Objects","Awaken","Dominate Person","Dream","Geas","Greater Restoration","Hold Monster","Legend Lore","Mass Cure Wounds","Mislead","Modify Memory","Planar Binding","Raise Dead","Scrying","Seeming","Teleportation Circle"];
-var pa3 = ["Aura of Vitality","Blinding Smite","Create Food and Water","Crusader's Mantle","Daylight","Dispel Magic","Elemental Weapon"];
-var ra3 = ["Conjure Animals","Conjure Barrage","Daylight","Lightning Arrow","Nondetection","Plant Growth","Protection from Energy","Speak with Plants","Water Breathing","Water Walk","Wind Wall"];
+
+var drCantrip = ["Create Bonfire","Control Flames","Druidcraft","Frostbite","Guidance","Gust","Magic Stone","Mending","Mold earth","Poison Spray","Produce Flame","Resistance","Shillelagh","Shape Water","Thorn Whip","Thunderclap"];
+var dr1 = ["Absorb Elements","Beast Bond","Ice Knife","Earth Tremor","Animal Friendship","Charm Person","Create or Destroy Water","Cure Wounds","Detect Magic","Detect Poison and Disease","Entangle","Faerie Fire","Fog Cloud","Goodberry","Healing Word","Jump","Longstrider","Purify Food and Drink","Speak with Animals","Thunderwave"];
+var dr2 = ["Dust Devil","Earthbind","Skywrite","Warding Wind","Animal Messenger","Barkskin","Beast Sense", "Darkvision", "Enhance Ability", "Find Traps", "Flame Blade", "Flaming Sphere", "Gust of Wind", "Heat Metal", "Hold Person","Lesser Restoration","Locate Object", "Moonbeam", "Pass without Trace", "Protection from Poison","Spike Growth"];
+//var drCantrip = ["Druidcraft","Guidance","Mending","Poison Spray","Produce Flame","Resistance","Shillelagh","Thorn Whip"];
+//var dr1 = ["Animal Friendship","Charm Person","Create or Destroy Water","Cure Wounds","Detect Magic","Detect Poison and Disease","Entangle","Faerie Fire","Fog Cloud","Goodberry","Healing Word","Jump","Longstrider","Purify Food and Drink","Speak with Animals","Thunderwave"];
+//var dr2 = ["Animal Messenger","Barkskin","Beast Sense", "Darkvision", "Enhance Ability", "Find Traps", "Flame Blade", "Flaming Sphere", "Gust of Wind", "Heat Metal", "Hold Person","Lesser Restoration","Locate Object", "Moonbeam", "Pass without Trace", "Protection from Poison","Spike Growth"];
+var dr3 = ["Erupting Earth","Flame Arrows","Tidal Wave","Wall of Water","Call Lightning","Conjure Animals","Daylight","Dispel Magic","Feign Death","Meld into Stone","Plant Growth","Protection from Energy","Sleet Storm","Speak with Plants","Water Breathing","Water Walk","Wind Wall"];
+//var dr3 = ["Call Lightning","Conjure Animals","Daylight","Dispel Magic","Feign Death","Meld into Stone","Plant Growth","Protection from Energy","Sleet Storm","Speak with Plants","Water Breathing","Water Walk","Wind Wall"];
+
+
+var dr4 = ["Elemental Bane","Watery Sphere","Blight","Confusion","Conjure Minor Elementals","Conjure Woodland Beings","Control Water","Dominate Beast","Freedom of Movement","Giant Insect","Grasping Vine","Hallucinatory Terrain","Ice Storm","Locate Creature","Polymorph","Stone Shape","Stoneskin","Wall of Fire"];
+var dr5 = ["Control Winds","Maelstrom","Transmute Rock","Antilife Shell","Awaken","Commune with Nature","Conjure Elemental","Contagion","Geas","Greater Restoration","Insect Plague","Mass Cure Wounds","Planar Binding","Reincarnate","Scrying","Tree Stride","Wall of Stone"];
+
+//var dr4 = ["Blight","Confusion","Conjure Minor Elementals","Conjure Woodland Beings","Control Water","Dominate Beast","Freedom of Movement","Giant Insect","Grasping Vine","Hallucinatory Terrain","Ice Storm","Locate Creature","Polymorph","Stone Shape","Stoneskin","Wall of Fire"];
+//var dr5 = ["Antilife Shell","Awaken","Commune with Nature","Conjure Elemental","Contagion","Geas","Greater Restoration","Insect Plague","Mass Cure Wounds","Planar Binding","Reincarnate","Scrying","Tree Stride","Wall of Stone"];
+
+
+var soCantrip = ["Create Bonfire","Control Flames","Frostbite","Gust","Mold Earth","Shape Water","Thunderclap","Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
+var so1 = ["Catapult","Ice Knife","Earth Tremor","Burning Hands","Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Fog Cloud","Jump","Magic Missile","Magic Missile","Mage Armor","Ray of Sickness","Shield","Silent Image","Sleep","Thunderwave","Witch Bolt"];
+var so2 = ["Aganazzar's Scorcher","Dust Devil","Earthbind","Maximilian's Earthen Grasp","Pyrotechnics","Snilloc's Snowball Swarm","Warding Wind","Alter Self","Blindness/Deafness","Blur","Cloud of Daggers","Crown of Madness","Darkness","Darkvision","Detect Thoughts","Enhance Ability","Enlarge/Reduce","Gust of Wind","Hold Person","Invisibility","Knock","Levitate","Mirror Image","Misty Step","Phantasmal Force","Scorching Ray","See Invisibility","Shatter","Spider Climb","Suggestion","Web"];
+var so3 = ["Erupting Earth","Flame Arrows","Melf's Minute Meteors","Wall of Water","Blink","Clairvoyance","Counterspell","Daylight","Dispel Magic","Fear","Fireball","Fly","Gaseous Form","Haste","Hypnotic Pattern","Lightning Bolt","Major Image","Protection from Energy","Sleet Storm","Slow","Stinking Cloud","Tongues","Water Breathing","Water Walk"];
+var so4 = ["Storm Sphere","Vitriolic Sphere","Watery Sphere","Banishment","Blight","Confusion","Dimension Door","Dominate Beast","Greater Invisibility","Ice Storm","Polymorph","Stoneskin","Wall of Fire"];
+var so5 = ["Control Winds","Immolation","Animate Objects","Cloudkill","Cone of Cold","Creation","Dominate Person","Hold Monster","Insect Plague","Seeming","Telekinesis","Teleportation Circle","Wall of Stone"];
+
+//var soCantrip = ["Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
+//var so1 = ["Burning Hands","Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Fog Cloud","Jump","Magic Missile","Magic Missile","Mage Armor","Ray of Sickness","Shield","Silent Image","Sleep","Thunderwave","Witch Bolt"];
+//var so2 = ["Alter Self","Blindness/Deafness","Blur","Cloud of Daggers","Crown of Madness","Darkness","Darkvision","Detect Thoughts","Enhance Ability","Enlarge/Reduce","Gust of Wind","Hold Person","Invisibility","Knock","Levitate","Mirror Image","Misty Step","Phantasmal Force","Scorching Ray","See Invisibility","Shatter","Spider Climb","Suggestion","Web"];
+//var so3 = ["Blink","Clairvoyance","Counterspell","Daylight","Dispel Magic","Fear","Fireball","Fly","Gaseous Form","Haste","Hypnotic Pattern","Lightning Bolt","Major Image","Protection from Energy","Sleet Storm","Slow","Stinking Cloud","Tongues","Water Breathing","Water Walk"];
+//var so4 = ["Banishment","Blight","Confusion","Dimension Door","Dominate Beast","Greater Invisibility","Ice Storm","Polymorph","Stoneskin","Wall of Fire"];
+//var so5 = ["Animate Objects","Cloudkill","Cone of Cold","Creation","Dominate Person","Hold Monster","Insect Plague","Seeming","Telekinesis","Teleportation Circle","Wall of Stone"];
+
+
+
+var waCantrip = ["Create Bonfire","Frostbite","Magic Stone","Thunderclap","Blade Ward","Chill Touch","Eldritch Blast","Friends","Mage Hand","Minor Illusion","Poison Spray","Prestidigitation","True Strike"];
+//var waCantrip = ["Blade Ward","Chill Touch","Eldritch Blast","Friends","Mage Hand","Minor Illusion","Poison Spray","Prestidigitation","True Strike"];
+var wa1 = ["Armor of Agathys","Arms of Hadar","Charm Person","Comprehend Languages","Expeditious Retreat","Hellish Rebuke","Hex","Illusory Script","Protection from Good and Evil","Unseen Servant","Witch Bolt"];
+var wa2 = ["Earthbind","Cloud of Daggers","Crown of Madness","Darkness","Enthrall","Hold Person","Invisibility","Mirror Image","Misty Step","Ray of Enfeeblement","Shatter","Spider Climb","Suggestion"];
+//var wa2 = ["Cloud of Daggers","Crown of Madness","Darkness","Enthrall","Hold Person","Invisibility","Mirror Image","Misty Step","Ray of Enfeeblement","Shatter","Spider Climb","Suggestion"];
+var wa3 = ["Counterspell","Dispel Magic","Fear","Fly","Gaseous Form","Hunger of Hadar","Hypnotic Pattern","Magic Circle","Major Image","Remove Curse","Tongues","Vampiric Touch"];
+
+var wa4 = ["Elemental Bane","Banishment","Blight","Dimension Door","Hallucinatory Terrain"];
+//var wa4 = ["Banishment","Blight","Dimension Door","Hallucinatory Terrain"];
+var wa5 = ["Contact Other Plane","Dream","Hold Monster","Scrying"];
+
+var tomeRituals = ["Illusory Script","Identify","Identify","Identify","Find Familiar","Detect Disease and Poison","Detect Magic","Detect Magic","Detect Magic","Comprehend Languages","Unseen Servant","Tenser's Floating Disk","Speak with Animals","Speak with Animals","Purify Food and Drink","Alarm","Alarm"];
+
+
+
+var wiCantrip = ["Create Bonfire","Control Flames","Frostbite","Gust","Mold Earth","Shape Water","Thunderclap","Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
+//var wiCantrip = ["Acid Splash","Blade Ward","Chill Touch","Dancing Lights","Fire Bolt","Friends","Light","Mage Hand","Mending","Message","Minor Illusion","Poison Spray","Prestidigitation","Ray of Frost","Shocking Grasp","True Strike"];
+//NOT ENOUGH FAMILIARS. therefore, 2 find familiar spells
+var wi1 = ["Absorb Elements","Catapult","Ice Knife","Earth Tremor","Alarm","Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Find Familiar","Find Familiar","Fog Cloud","Grease","Identify","Illusory Script","Jump","Longstrider","Mage Armor","Magic Missile","Protection from Good and Evil","Ray of Sickness","Shield","Silent Image","Sleep","Tasha's Hideous Laughter","Tenser's Floating Disk","Thunderwave","Unseen Servant","Witch Bolt"];
+var wi2 = ["Aganazzar's Scorcher","Dust Devil","Earthbind","Maximilian's Earthen Grap","Pyrotechnics","Skywrite","Snilloc's Snowball Swarm","Alter Self","Arcane Lock","Blindness/Deafness","Blur","Cloud of Daggers","Continual Flame","Crown of Madness","Darkness","Darkvision","Detect Thoughts","Enlarge/Reduce","Flaming Sphere","Gentle Repose","Gust of Wind","Hold Person","Invisibility","Knock","Levitate","Locate Object","Magic Mouth","Magic Weapon","Melf's Acid Arrow","Mirror Image","Misty Step","Nystul's Magic Aura","Phantasmal Force","Ray of Enfeeblement","Rope Trick","Scorching Ray","See Invisibility","Shatter","Spider Climb","Suggestion","Web"];
+var wi3 = ["Erupting Earth","Flame Arrows","Melf's Minute Meteors","Tidal Wave","Wall of Sand","Wall of Water","Animate Dead","Bestow Curse","Blink","Clairvoyance","Counterspell","Dispel Magic","Fear","Feign Death","Fireball","Fly","Gaseous Form","Glyph of Warding","Haste","Hypnotic Pattern","Leomund’s Tiny Hut","Lightning Bolt","Magic Circle","Major Image","Nondetection","Phantom Steed","Protection from Energy","Remove Curse","Sending","Sleet Storm","Slow","Stinking Cloud","Tongues","Vampiric Touch","Water Breathing"];
+var wi4 = ["Elemental Bane","Storm Sphere","Vitriolic Sphere","Watery Sphere","Arcane Eye","Banishment","Blight","Confusion","Conjure Minor Elementals","Control Water","Dimension Door","Evard's Black Tentacles","Fabricate","Fire Shield","Greater Invisibility","Hallucinatory Terrain","Ice Storm","Leomund’s Secret Chest","Locate Creature","Mordenkainen’s Faithful Hound","Mordenkainen’s Private Sanctum","Otiluke’s Resilient Sphere","Phantasmal Killer","Polymorph","Stone Shape","Stoneskin","Wall of Fire"];
+var wi5 = ["Control Winds","Immolation","Transmute Rock","Animate Objects","Bigby’s Hand","CloudkilI","Cone of Cold","Conjure Elemental","Contact Other Plane","Creation","Dominate Person","Dream","Geas","Hold Monster","Legend Lore","Mislead","Modify Memory","Passwall","Planar Binding","Rary’s Telepathic Bond","Scrying","Seeming","Telekinesis","Teleportation Circle","Wall of Force","Wall of Stone"];
+
+//var wi1 = ["Alarm","Burning Hands","Charm Person","Chromatic Orb","Color Spray","Comprehend Languages","Detect Magic","Disguise Self","Expeditious Retreat","False Life","Feather Fall","Find Familiar","Find Familiar","Fog Cloud","Grease","Identify","Illusory Script","Jump","Longstrider","Mage Armor","Magic Missile","Protection from Good and Evil","Ray of Sickness","Shield","Silent Image","Sleep","Tasha's Hideous Laughter","Tenser's Floating Disk","Thunderwave","Unseen Servant","Witch Bolt"];
+//var wi2 = ["Alter Self","Arcane Lock","Blindness/Deafness","Blur","Cloud of Daggers","Continual Flame","Crown of Madness","Darkness","Darkvision","Detect Thoughts","Enlarge/Reduce","Flaming Sphere","Gentle Repose","Gust of Wind","Hold Person","Invisibility","Knock","Levitate","Locate Object","Magic Mouth","Magic Weapon","Melf's Acid Arrow","Mirror Image","Misty Step","Nystul's Magic Aura","Phantasmal Force","Ray of Enfeeblement","Rope Trick","Scorching Ray","See Invisibility","Shatter","Spider Climb","Suggestion","Web"];
+//var wi3 = ["Animate Dead","Bestow Curse","Blink","Clairvoyance","Counterspell","Dispel Magic","Fear","Feign Death","Fireball","Fly","Gaseous Form","Glyph of Warding","Haste","Hypnotic Pattern","Leomund’s Tiny Hut","Lightning Bolt","Magic Circle","Major Image","Nondetection","Phantom Steed","Protection from Energy","Remove Curse","Sending","Sleet Storm","Slow","Stinking Cloud","Tongues","Vampiric Touch","Water Breathing"];
+//var wi4 = ["Arcane Eye","Banishment","Blight","Confusion","Conjure Minor Elementals","Control Water","Dimension Door","Evard's Black Tentacles","Fabricate","Fire Shield","Greater Invisibility","Hallucinatory Terrain","Ice Storm","Leomund’s Secret Chest","Locate Creature","Mordenkainen’s Faithful Hound","Mordenkainen’s Private Sanctum","Otiluke’s Resilient Sphere","Phantasmal Killer","Polymorph","Stone Shape","Stoneskin","Wall of Fire"];
+//var wi5 = ["Animate Objects","Bigby’s Hand","CloudkilI","Cone of Cold","Conjure Elemental","Contact Other Plane","Creation","Dominate Person","Dream","Geas","Hold Monster","Legend Lore","Mislead","Modify Memory","Passwall","Planar Binding","Rary’s Telepathic Bond","Scrying","Seeming","Telekinesis","Teleportation Circle","Wall of Force","Wall of Stone"];
 
 
 var scrollBardUnc = ["Cure Wounds","Speak with Dead","Fear","Invisibility","Dispel Magic","Polymorph","Major Image"];
@@ -953,9 +1014,6 @@ var scrollWizaVery = ["Mass Suggestion","Plane Shift","Delayed Blast Fireball"];
 
 
 
-var wa3 = ["Counterspell","Dispel Magic","Fear","Fly","Gaseous Form","Hunger of Hadar","Hypnotic Pattern","Magic Circle","Major Image","Remove Curse","Tongues","Vampiric Touch"];
-var ra2 = ["Animal Messenger","Barkskin","Beast Sense","Cordon of Arrows","Darkvision","Find Traps","Lesser Restoration","Locate Animals or Plants","Locate Object","Pass without Trace","Protection from Poison","Silence","Spike Growth"];
-var pa2 = ["Aid","Branding Smite","Find Steed","Lesser Restoration","Locate Object","Magic Weapon","Protection from Poison","Zone of Truth"];
 var ci0 = ["Hold Person","Spike Growth","Sleet Storm","Slow"];
 var ci1 = ["Mirror image","Misty Step","Water Breathing","Water Walk"];
 var ci2 = ["Blur","Silence","Create Food and Water","Protection from Energy"];
@@ -1082,10 +1140,17 @@ companion =-1;
 var myMusic = [];
 var myInstrument = "";
 favored = "";
+aarName=["Aera","Aial","Aur","Deekek","Errk","Heehk","Ikki","Kleeck","Oorr","Ouss","Quaf","Quierk","Salleek","Urreek","Zeed"];
 gnomeNameM=["Alston","Alvyn","Boddynock","Brocc","Burgell","Dimble","Eldon","Erky","Fonkin","Frug","Gerbo","Gimble","Glim","Jebeddo","Kellen","Namfoodle","Orryn","Roondar","Seebo","Sindri","Warryn","Wrenn","Zook"];
 gnomeNameF=["Bimpnottin","Breena","Caramip","Carlin","Donella","Duvamil","Ella","Ellyjobell","Ellywick","Lilli","Loopmottin","Lorilla","Mardnab","Nissa","Nyx","Oda","Orla","Roywyn","Shamil","Tana","Waywocket","Zanna"];
 gnomeNameLast=["Beren","Daergel","Folkor","Garrick","Nackle","Murnig","Ningel","Raulnor","Scheppen","Timbers","Turen"];
 gnomeNicknames=["Aleslosh","Ashhearth","Badger","Cloak","Doublelock","Filchbatter","Fnipper","Ku","Nim","Oneshoe","Pock","Sparklegem","Stumbleduck"];
+deepGnomeNameM=["Belwar","Brickers","Durthmeck","Firble","Krieger","Kronthud","Schneltheck","Schnicktick","Thulwar","Walschud"];
+deepGnomeNameF=["Beliss","Durthee","Frickarti","Ivridda","Krivi","Lulthiss","Nalvarti","Schnella","Thulmarra","Wirsidda"];
+deepGnomeNameLast=["Crystalfist","Gemcutter","Ironfoot","Rockhewer","Seamfinder","Stonecutter"];
+goliathNameBirth=["Aukan","Eglath","Gae-Al","Gauthak","Ilikan","Keothi","Kuori","Lo-Kag","Manneo","Maveith","Nalla","Orilo","Paavu","Pethani","Thalai","Thotham","Uthal","Vauea","Vimak"];
+goliathNameNick=["Bearkiller","Dawncaller","Fearless","Flintfinder","Horncarver","Keeneye","Lonehunter","Longleaper","Rootsmasher","Skywatcher","Steadyhand","Threadtwister","Twice-Orphaned","Twistedlimb","Wordpainter"];
+goliathNameClan=["Anakalathai","Elanithino","Gathakanathi","Kalagiano","Katho-Olavi","Kolae-Gileana","Ogolakanu","Thuliaga","Thunukalathi","Vaimei-Laga"];
 humanNameM=["Ander","Blath","Bran","Frath","Geth","Lander","Luth","Malcer","Stor","Taman","Urth","Aseir","Bardeid","Haseid","Khemed","Mehmen","Sudeiman","Zasheir","Bor","Fodel","Glar","Grigor","Igan","Ivor","Kosef","Mival","Orel","Pavel","Sergor"];
 humanNameF=["Amafrey","Betha","Cefrey","Kethra","Mara","Olga","Silifrey","Westra","Atala","Ceidil","Hama","Jasmal","Meilil","Seipora","Yasheira","Zasheida","Alethra","Kara","Katernin","Mara","Natali","Olma","Tana","Zora"];
 humanNameLast=["Brightwood","Helder","Hornraven","Lackman","Stormwind","Windrivver","Basha","Dumein","Jassan","Khalid","Mostana","Pashar","Rein","Bersk","Chernin","Dotsk","Kulenov","Marsk","Nemetsk","Shemov","Starag"];
@@ -1479,6 +1544,9 @@ function showAbil () {
 		//show bonus for boots of striding and sprinigng
 		if ((bootsOfSS == true) && (speed < 30)) 
 			output += " (30 with boots)";
+		if (racetxt == "Aarakocra") {
+			output += " (50 flying speed)"
+		}
 		
 		output += " &nbsp; Passive perception:  " + passive +" &nbsp; Size:  " + size+" &nbsp; Proficiency bonus:  " + showPlus(prof);
 
@@ -1657,7 +1725,7 @@ if (document.getElementById("genMethod").value == "1") {
 
 exotic = Math.floor((Math.random() * 4) + 1); 
 
-if (forceRace >9) {
+if ((forceRace >9) && (forceRace < 21)) {
 	exotic =0;
 } else if (forceRace > 0) {
 	exotic=1;
@@ -1668,7 +1736,11 @@ racetxt = "";
 //exotic=1;
 if (exotic == 1) {
 	abOutput+="<b>Racial Traits:</b> ";
-	ra = Math.floor((Math.random() * 7) + 1); 
+
+	ra = Math.floor((Math.random() * 14) + 1); 
+	if (ra > 7) {
+		ra += 13;
+	}
 
 	if (forceRace > 0)
 		ra=forceRace;
@@ -1829,6 +1901,119 @@ if (exotic == 1) {
 		abOutput += "Darkvision, Gnome Cunning, Artificer's Lore";
 		toOutput += ", Tinker's tools";
 		break;
+	case (21):
+		racetxt="Aarakocra";
+		abil[1] += 2;
+		speed=25;
+		abil[4] += 1;
+		size="Medium";
+		languageOutput = "Common, Aarakocra, Auran";
+		abOutput += "Flight, Talons";
+		name = aarName[Math.floor(Math.random() * aarName.length)];
+		break;	
+	case (22):
+		racetxt="Deep Gnome (Svirfneblin)";
+		abil[3] += 2;
+		speed=25;
+		abil[1] += 1;
+		size="Small";
+		languageOutput = "Common, Gnomish, Undercommon";
+		if (gender==2) {
+			name = deepGnomeNameF[Math.floor(Math.random() * deepGnomeNameF.length)];
+		} else {
+			name = deepGnomeNameM[Math.floor(Math.random() * deepGnomeNameM.length)];
+		}
+		name += " " + deepGnomeNameLast[Math.floor(Math.random() * deepGnomeNameLast.length)];
+		abOutput += "Superior Darkvision (120 ft), Gnome Cunning, Stone Camouflage";
+		break;
+	case (23):
+		racetxt="Air Genasi";
+		abil[1] += 1;
+		abOutput += "Unending Breath, Mingle with the Wind";
+		raceSpells.push("Levitate (once per long rest)");
+		raceSpellAbility = 2;
+		abil[2] += 2;
+		speed=30;
+		size="Medium";
+		languageOutput = "Common, Primordial";
+		if (gender==2) {
+			name = humanNameF[Math.floor(Math.random() * humanNameF.length)];
+		} else {
+			name = humanNameM[Math.floor(Math.random() * humanNameM.length)];
+		}
+		name += " " + humanNameLast[Math.floor(Math.random() * humanNameLast.length)];
+		break;
+	case (24):
+		racetxt="Earth Genasi";
+		abil[1] += 0;
+		abOutput += "Earth Walk, Merge with Stone";
+		raceSpells.push("Pass Without Trace (once per long rest)");
+		raceSpellAbility = 2;
+		abil[2] += 2;
+		speed=30;
+		size="Medium";
+		languageOutput = "Common, Primordial";
+		if (gender==2) {
+			name = humanNameF[Math.floor(Math.random() * humanNameF.length)];
+		} else {
+			name = humanNameM[Math.floor(Math.random() * humanNameM.length)];
+		}
+		name += " " + humanNameLast[Math.floor(Math.random() * humanNameLast.length)];
+		break;
+	case (25):
+		racetxt="Fire Genasi";
+		abil[3] += 1;
+		abOutput += "Darkvision, Fire Resistance, Reach to the Blaze";
+		raceSpells.push("Produce Flame");
+		if (level > 2) 
+			raceSpells.push("Burning Hands (as a 1st level spell once per long rest)");
+		raceSpellAbility = 2;
+		abil[2] += 2;
+		speed=30;
+		size="Medium";
+		languageOutput = "Common, Primordial";
+		if (gender==2) {
+			name = humanNameF[Math.floor(Math.random() * humanNameF.length)];
+		} else {
+			name = humanNameM[Math.floor(Math.random() * humanNameM.length)];
+		}
+		name += " " + humanNameLast[Math.floor(Math.random() * humanNameLast.length)];
+		break;
+	case (26):
+		racetxt="Water Genasi";
+		abil[4] += 1;
+		abOutput += "Acid Resistance, Amphibious, Swim, Call to the Wave";
+		raceSpells.push("Shape Water");
+		if (level > 2) 
+			raceSpells.push("Create or Destroy Water (as a 2nd level spell once per long rest)");
+		raceSpellAbility = 2;
+		abil[2] += 2;
+		speed=30;
+		size="Medium";
+		languageOutput = "Common, Primordial";
+		if (gender==2) {
+			name = humanNameF[Math.floor(Math.random() * humanNameF.length)];
+		} else {
+			name = humanNameM[Math.floor(Math.random() * humanNameM.length)];
+		}
+		name += " " + humanNameLast[Math.floor(Math.random() * humanNameLast.length)];
+		break;
+	case (27):
+		racetxt="Goliath";
+		abil[2] += 1;
+		abOutput += "Natural Athlete (Athletics skill), Stone's Endurance, Powerful Build, Mountain Born";
+		
+		abil[0] += 2;
+		mySkills.push(3);
+		skLearn[3] = true;
+		speed=30;
+		size="Medium";
+		languageOutput = "Common, Giant";
+		name = goliathNameBirth[Math.floor(Math.random() * goliathNameBirth.length)] + "  \"" + goliathNameNick[Math.floor(Math.random() * goliathNameNick.length)] + "\" " + goliathNameClan[Math.floor(Math.random() * goliathNameClan.length)];
+		break;
+
+
+
 	}
 
 }
