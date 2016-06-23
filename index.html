@@ -3571,11 +3571,9 @@ switch (cl) {
 		}
 		if (level > 2) {
 			x=Math.floor(Math.random() * 2); 	
-			x=Math.random();
-			if (forceRogu > -1) {
+			if (forceRogu != -1) {
 				x=forceRogu;
 			} 
-			
 			if (x==0) {
 				temp += "Thief), Fast Hands, Second-Story Work";
 				classtxt += " (Thief)";
