@@ -7,13 +7,24 @@ font: 12pt helvetica;
 width: 100%;
 }
 
-#name{
-	font-size: large;
-	font-weight: bold;
+h2{
+	margin-bottom: .5rem;
+}
+p{
+	margin: 6px 0px;
 }
 
-p{
+.densetext{
 	margin: 2px 0px;
+}
+
+#attr{
+	display: flex;
+}
+
+.stat{
+	text-align: center;
+	margin: 0px 6px;
 }
 
 .top {
