@@ -1,0 +1,81 @@
+.complete {
+/*
+http://i.imgur.com/DnuoN8l.gif
+*/
+
+font: 12pt helvetica;
+width: 100%;
+}
+
+.top {
+font: 11pt helvetica;
+width: 100%;
+}
+
+.alText {
+font: 11pt helvetica;
+float: right;
+}
+
+.detailed {
+	font: 12pt helvetica;
+	display: none;
+}
+
+
+.rawAbils {
+	font: 10pt helvetica;
+	padding-left: 5px;
+}
+
+.buyDropdowns {
+	display: none;
+}
+
+.classOptions {
+	display: none;
+}
+
+.armorhp {
+	float: right;
+	padding-right: 1em;
+	padding-bottom: 1em;
+
+	padding-top: 1em;
+	padding-bottom: .5em;
+
+}
+
+.info {
+	float: right;
+	padding-right: 1em;
+}
+
+.spells {
+	border-top: 1px solid;
+	width: 100%;
+	margin-top: .5em;
+	padding-top: .5em;
+/*	padding: .5em;
+	margin: .5em;
+	visibility: hidden; */
+}
+
+
+.bg {
+	font-weight: bold;
+}
+
+.main-area {
+
+}
+
+.side-area {
+	float: right;
+	width: 350px;
+	padding-bottom: .5em;
+	padding-left: .5em;
+	border-left:  1px solid;
+	border-bottom:  1px solid;
+	margin-left: .5em;
+  }
