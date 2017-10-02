@@ -10635,23 +10635,33 @@ if (myAr[0] == "Shield" && (myAr.length > 1)) {
 
 	}
 }
+var deftags = '<p class="densetext"><b>'
+var defClose = '</p>'
+
+//--->This line is the beginning of Armor Class.  It goes on for a ways.
+defOutput += deftags + 'AC:</b> ' + ac + ' ('
 
 arOutput+= "<b>Hit points: " + hp + "</b> &nbsp; Hit dice:  " + level + "d" + hd +"<br><b>Armor:  ";
 
 if (myAr.length == 0) {
 		arOutput += "None";
+		defOutput += "None"
 	}
 
 if (myAr.length > 1) {
 	if (whichMagicArmor == 0)
 		arOutput += "+" + magicArmor+" ";
+		//defOutput += '+' + magicArmor + ' '
 
 	arOutput += myAr[0] + " and "
+	defOutput += myAr[0] + " and "
 
 	if (whichMagicArmor == 1)
 		arOutput += "+" + magicArmor +" ";
+		//defOutput += "+" + magicArmor +" "
 
 	arOutput += myAr[1];
+	defOutput += myAr[1]
 }
 
 
@@ -10661,10 +10671,25 @@ if (myAr.length > 1) {
 if (myAr.length == 1) {
 	if (magicArmor > 0)
 		arOutput += "+" + magicArmor + " ";
+		//defOutput += "+" + magicArmor + " "
 	arOutput += myAr;
+	defOutput += myAr
 }
 
+defOutput += ')' + defClose
+//--> This line ends Armor Class
 arOutput += "<br>AC:  " + ac + "</b><br>";
+arOutput+= "<b>Hit points: " + hp + "</b> &nbsp; Hit dice:  " + level + "d" + hd +"<br><b>Armor:  ";
+
+defOutput += deftags + 'Hit Points: </b>' + hp + '  (Hit dice: ' + level + 'd' + hd + ')' + defClose
+defOutput += deftags + 'Speed: </b>' + speed
+if ((bootsOfSS == true) && (speed < 30))
+	defOutput += " (30 with boots)";
+if (racetxt == "Aarakocra") {
+	defOutput += " (50 flying speed)"
+}
+defOutput += defClose
+//--> More below because initiative calculations still need to happen or something???
 
 
 
@@ -10748,6 +10773,9 @@ if (abOutput.indexOf("Remarkable Athlete") > -1) {
 	initiative += Math.ceil(prof/2);
 }
 
+defOutput += deftags + 'Initiative: </b>' + showPlus( initiative ) + defClose
+defOutput += deftags + 'Size: </b>' + size + defClose
+defOutput += deftags + 'Proficiency Bonus: </b>' + showPlus(prof) + defClose
 
 
 showAbil();
@@ -10755,7 +10783,7 @@ if (al==true) {
 	output  +=   "<b>Faction:</b>  " + factions[myFaction] + " &nbsp; Lifestyle:  " + lifestyles[myLifestyle];
 }
 document.getElementById("name").innerHTML = nameOutput;
-document.getElementById("def").innerHTML = 'defOutput';
+document.getElementById("def").innerHTML = defOutput;
 document.getElementById("attr").innerHTML = attrOutput;
 document.getElementById("general").innerHTML = 'generalOutput';
 document.getElementById("features").innerHTML = 'featuresOutput';
