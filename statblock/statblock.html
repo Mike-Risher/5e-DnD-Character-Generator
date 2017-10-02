@@ -9774,7 +9774,7 @@ if ((upgrade() == true) && (gold > 250)) {
 }
 
 // show total gold we own
-weOutput += " &nbsp; <b>Wealth:</b> " + gold + " gp";
+weOutput += " &nbsp; <br><b>Wealth:</b> " + gold + " gp";
 if (platinum > 0) {
 	weOutput += ", " + platinum + " pp";
 }
@@ -10779,18 +10779,33 @@ defOutput += deftags + 'Initiative: </b>' + showPlus( initiative ) + defClose
 defOutput += deftags + 'Size: </b>' + size + defClose
 defOutput += deftags + 'Proficiency Bonus: </b>' + showPlus(prof) + defClose
 
-//var attrnames = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
-generalOutput += '<p><b>Saves:</b> '
+var pb = '<p><b>'
+var closeB = '</b> '
+
+generalOutput += pb + 'Saves:</b> '
 attrnames.forEach( function ( attrname, index) {
 	generalOutput += attrname + ' (' + showPlus( saves[index] ) +') '
 } )
 generalOutput += '</p>'
-generalOutput += '<p><b>ProficientSkills:</b> ' + skOutput + '</p>'
+generalOutput += pb + 'ProficientSkills:' + closeB + skOutput + '</p>'
 //-->The current thing doesn't really support senses, but that's also not generally its own spot on a character sheet like it is on a monster statblock.
-//generalOutput += '<p><b>Senses:</b> '
-generalOutput += '<p><b>Passive Perception:</b> ' + passivePerception + '</p>'
-generalOutput += '<p><b>Languages:</b> ' + languageOutput + '</p>'
-generalOutput += '<p><b>Other Proficiencies:</b> ' + toOutput + '</p>'
+//generalOutput += pb + 'Senses:' + closeB
+generalOutput += pb + 'Passive Perception:' + closeB + passivePerception + '</p>'
+generalOutput += pb + 'Languages:' + closeB + languageOutput + '</p>'
+generalOutput += pb + 'Other Proficiencies:' + closeB + toOutput + '</p>'
+
+//This is a huge mess because abilities and racial traits are just concatted onto abOutput and are never in their own separate variable, so I have to go into every single race and class description and change this. Can I do this with find-replace somehow?
+if( abOutput.indexOf('<b>Racial', 0) > -1 ){
+	abOutput = abOutput.slice( abOutput.indexOf('<b>Racial', 0) )
+} else {
+	abOutput = abOutput.slice( abOutput.indexOf('<b>Abil', 0) )
+
+}
+featuresOutput += abOutput
+
+attacksOutput += '<b>MeleeWeapons:</b>' + wpOutput
+
+eqpOutput += '<b>Equipment:</b>' + eqOutput
 
 spellsOutput = spOutput
 
@@ -10802,9 +10817,9 @@ document.getElementById("name").innerHTML = nameOutput;
 document.getElementById("def").innerHTML = defOutput;
 document.getElementById("attr").innerHTML = attrOutput;
 document.getElementById("general").innerHTML = generalOutput;
-document.getElementById("features").innerHTML = 'featuresOutput';
-document.getElementById("attacks").innerHTML = 'attacksOutput';
-document.getElementById("eqp").innerHTML = 'eqpOutput';
+document.getElementById("features").innerHTML = featuresOutput;
+document.getElementById("attacks").innerHTML = attacksOutput;
+document.getElementById("eqp").innerHTML = eqpOutput;
 document.getElementById("spells").innerHTML = spellsOutput;
 
 
