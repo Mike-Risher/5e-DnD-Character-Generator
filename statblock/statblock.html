@@ -1481,8 +1481,10 @@ function showPlus(x) {
 		return x;
 }
 
-
+//This should really go somewhere else.
+var attrnames = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
 //show char sheet
+var passivePerception = 10
 function showAbil () {
 
 //determine passive perception
@@ -1496,8 +1498,8 @@ function showAbil () {
 		passive += Math.floor(prof/2);
 	}
 
-//  <div class="stat" ><p><b>STR</b></p><p>18 (+4)</p></div>
-	var attrnames = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
+	passivePerception = passive
+
 	attrnames.forEach( function ( attrname, index) {
 		attrOutput += '<div class="stat" ><p><b>' + attrname + '</b></p><p>' + abil[index] + ' (' + showPlus( mod[index] ) +')</p></div>'
 	} )
@@ -10777,6 +10779,20 @@ defOutput += deftags + 'Initiative: </b>' + showPlus( initiative ) + defClose
 defOutput += deftags + 'Size: </b>' + size + defClose
 defOutput += deftags + 'Proficiency Bonus: </b>' + showPlus(prof) + defClose
 
+//var attrnames = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
+generalOutput += '<p><b>Saves:</b> '
+attrnames.forEach( function ( attrname, index) {
+	generalOutput += attrname + ' (' + showPlus( saves[index] ) +') '
+} )
+generalOutput += '</p>'
+generalOutput += '<p><b>ProficientSkills:</b> ' + skOutput + '</p>'
+//-->The current thing doesn't really support senses, but that's also not generally its own spot on a character sheet like it is on a monster statblock.
+//generalOutput += '<p><b>Senses:</b> '
+generalOutput += '<p><b>Passive Perception:</b> ' + passivePerception + '</p>'
+generalOutput += '<p><b>Languages:</b> ' + languageOutput + '</p>'
+generalOutput += '<p><b>Other Proficiencies:</b> ' + toOutput + '</p>'
+
+spellsOutput = spOutput
 
 showAbil();
 if (al==true) {
@@ -10785,11 +10801,11 @@ if (al==true) {
 document.getElementById("name").innerHTML = nameOutput;
 document.getElementById("def").innerHTML = defOutput;
 document.getElementById("attr").innerHTML = attrOutput;
-document.getElementById("general").innerHTML = 'generalOutput';
+document.getElementById("general").innerHTML = generalOutput;
 document.getElementById("features").innerHTML = 'featuresOutput';
 document.getElementById("attacks").innerHTML = 'attacksOutput';
 document.getElementById("eqp").innerHTML = 'eqpOutput';
-document.getElementById("spells").innerHTML = 'spellsOutput';
+document.getElementById("spells").innerHTML = spellsOutput;
 
 
  document.getElementById("ro").innerHTML = rollOutput;
